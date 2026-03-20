@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/widgets/header/Header.svelte';
@@ -26,10 +24,4 @@
 	<ProductModal alt={modal} onclose={() => (modal = null)} />
 {/if}
 
-<div style="display:none">
-	{#each locales as locale (locale)}
-		<a href={localizeHref(page.url.pathname, { locale })}>
-			{locale}
-		</a>
-	{/each}
-</div>
+<div style="display:none"></div>
