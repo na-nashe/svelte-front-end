@@ -6,9 +6,7 @@
 
 	const tabs: { id: string; path: string; label: string }[] = [
 		{ id: 'home', path: '/', label: 'Головна' },
-		{ id: 'catalog', path: '/catalog', label: 'Каталог' },
-		{ id: 'nashe', path: '/nashe', label: '🇺🇦 Наше' },
-		{ id: 'cashback', path: '/cashback', label: '💳 Кешбек' }
+		{ id: 'catalog', path: '/catalog', label: 'Каталог' }
 	];
 
 	const currentPath = $derived($page.url.pathname);
@@ -49,9 +47,11 @@
 				href={t.path}
 				class="cursor-pointer rounded-lg border-b-[2.5px] border-none px-3.5 py-1.5 font-[Outfit] text-[13px] no-underline transition-all duration-150
 					{active
-					? 'bg-stone-900/[0.03] font-bold text-stone-900 border-b-[#0057B7]'
-					: 'bg-transparent font-medium text-stone-400 border-b-transparent hover:text-stone-600'}"
-				style={active ? 'border-bottom: 2.5px solid #0057B7' : 'border-bottom: 2.5px solid transparent'}
+					? 'border-b-[#0057B7] bg-stone-900/[0.03] font-bold text-stone-900'
+					: 'border-b-transparent bg-transparent font-medium text-stone-400 hover:text-stone-600'}"
+				style={active
+					? 'border-bottom: 2.5px solid #0057B7'
+					: 'border-bottom: 2.5px solid transparent'}
 			>
 				{t.label}
 			</a>

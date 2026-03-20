@@ -29,3 +29,6 @@ project.inlang/cache/
 
 *storybook.log
 storybook-static
+
+.claude
+.cursor
