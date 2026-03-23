@@ -6,23 +6,16 @@
 			desc: 'Підтримай своїх — відкрий для себе українські продукти світового рівня',
 			href: '/nashe',
 			gradient: 'linear-gradient(135deg, #0057B7, #1e40af)'
-		},
-		{
-			icon: '💳',
-			title: 'Перевір свій продукт',
-			desc: 'Дізнайся, чи підтримує твій улюблений бренд ворога або Україну',
-			href: '/cashback',
-			gradient: 'linear-gradient(135deg, #065f46, #059669)'
 		}
 	];
 </script>
 
 <section class="bg-[#fafaf9] px-4 py-16 sm:py-24">
-	<div class="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
+	<div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-6">
 		{#each cards as card (card.href)}
 			<a
 				href={card.href}
-				class="group relative overflow-hidden rounded-3xl p-8 text-white no-underline transition-all duration-300 hover:-translate-y-[3px] hover:shadow-2xl sm:p-10"
+				class="w-full max-w-[420px] group relative overflow-hidden rounded-3xl p-8 text-white no-underline transition-all duration-300 hover:-translate-y-[3px] hover:shadow-2xl sm:p-10"
 				style="background: {card.gradient}"
 			>
 				<!-- Floating gold orb -->
