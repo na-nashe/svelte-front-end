@@ -35,7 +35,9 @@
 	<div class="mx-auto max-w-5xl">
 		<!-- Header -->
 		<div class="mb-12 text-center">
-			<span class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase">
+			<span
+				class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase"
+			>
 				3 прості кроки
 			</span>
 			<h2 class="font-[Outfit] text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
@@ -50,7 +52,9 @@
 					<button
 						onclick={() => (activeStep = i)}
 						class="group flex w-full cursor-pointer items-start gap-4 rounded-2xl border-2 px-5 py-4 text-left transition-all duration-300"
-						style="border-color: {activeStep === i ? step.color : 'transparent'}; background: {activeStep === i ? step.color + '08' : 'white'}"
+						style="border-color: {activeStep === i
+							? step.color
+							: 'transparent'}; background: {activeStep === i ? step.color + '08' : 'white'}"
 					>
 						<!-- Step number -->
 						<div
@@ -74,7 +78,11 @@
 						<div class="mt-2 flex-shrink-0">
 							<div
 								class="h-2.5 w-2.5 rounded-full transition-all duration-300"
-								style="background: {activeStep === i ? step.color : '#e7e5e4'}; box-shadow: {activeStep === i ? `0 0 0 4px ${step.color}20` : 'none'}"
+								style="background: {activeStep === i
+									? step.color
+									: '#e7e5e4'}; box-shadow: {activeStep === i
+									? `0 0 0 4px ${step.color}20`
+									: 'none'}"
 							></div>
 						</div>
 					</button>

@@ -8,7 +8,9 @@
 	<div class="mx-auto max-w-5xl">
 		<!-- Header -->
 		<div class="mb-12 text-center">
-			<span class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase">
+			<span
+				class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase"
+			>
 				Made in Ukraine
 			</span>
 			<h2 class="font-[Outfit] text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">

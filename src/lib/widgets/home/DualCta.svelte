@@ -38,7 +38,9 @@
 				</p>
 
 				<!-- Arrow -->
-				<div class="absolute right-6 bottom-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 font-bold text-white transition-transform duration-300 group-hover:translate-x-1">
+				<div
+					class="absolute right-6 bottom-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 font-bold text-white transition-transform duration-300 group-hover:translate-x-1"
+				>
 					→
 				</div>
 			</a>
