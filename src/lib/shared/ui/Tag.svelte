@@ -10,4 +10,6 @@
 	const c = $derived(config[type] ?? config.free);
 </script>
 
-<span class="text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wide {c.bg} {c.text}">{c.label}</span>
+<span class="rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase {c.bg} {c.text}"
+	>{c.label}</span
+>

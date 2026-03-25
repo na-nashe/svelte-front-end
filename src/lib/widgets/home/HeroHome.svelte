@@ -12,12 +12,6 @@
 
 	const quickCats = CATS.slice(0, 6);
 
-	const stats = [
-		{ value: '847', label: 'альтернатив', icon: '🔄' },
-		{ value: '12K+', label: 'відгуків', icon: '✍️' },
-		{ value: '45K+', label: 'користувачів', icon: '👥' }
-	];
-
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
 </script>
 

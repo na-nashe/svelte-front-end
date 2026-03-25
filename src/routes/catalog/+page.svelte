@@ -59,14 +59,19 @@
 		<div class="flex-1" class:key={`${cat}-${sort}-${viewMode}`}>
 			{#if sorted.length === 0}
 				<!-- Empty state -->
-				<div class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center">
-					<div class="animate-float mb-4 text-5xl">📭</div>
+				<div
+					class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center"
+				>
+					<div class="mb-4 animate-float text-5xl">📭</div>
 					<h3 class="mb-2 text-xl font-extrabold">Тут поки порожньо</h3>
-					<p class="mx-auto mb-5 max-w-[300px] text-sm text-stone-500">В цій категорії ще немає продуктів</p>
+					<p class="mx-auto mb-5 max-w-[300px] text-sm text-stone-500">
+						В цій категорії ще немає продуктів
+					</p>
 					<button
 						onclick={() => (cat = null)}
 						class="cursor-pointer rounded-xl border-[1.5px] border-stone-200 bg-white px-6 py-2.5 font-[Outfit] text-[13px] font-bold transition-colors hover:bg-stone-50"
-					>Показати все</button>
+						>Показати все</button
+					>
 				</div>
 			{:else if viewMode === 'list'}
 				<div class="flex flex-col gap-3">

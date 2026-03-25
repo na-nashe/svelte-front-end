@@ -16,7 +16,7 @@
 
 <button
 	{onclick}
-	class="px-4 py-2 rounded-xl text-[13px] cursor-pointer font-[Outfit] transition-all duration-200
+	class="cursor-pointer rounded-xl px-4 py-2 font-[Outfit] text-[13px] transition-all duration-200
 		{active ? 'font-bold text-stone-900' : 'font-medium text-stone-500'}
 		{active ? '' : 'border-[1.5px] border-stone-200 bg-white'}"
 	style={active ? `border: 2px solid ${color}; background: ${color}08;` : ''}
