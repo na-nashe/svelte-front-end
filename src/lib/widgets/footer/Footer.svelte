@@ -4,7 +4,7 @@
 			<span class="font-bold text-stone-900">НаНаше</span> © 2026 · Зроблено в Україні 🇺🇦
 		</div>
 		<div class="flex gap-5">
-			{#each ['Про проєкт', 'API', 'GitHub', 'Контакти'] as link (link)}
+			{#each ['Про проєкт'] as link (link)}
 				<a
 					href="#"
 					class="text-xs text-stone-400 no-underline transition-colors duration-150 hover:text-stone-900"
