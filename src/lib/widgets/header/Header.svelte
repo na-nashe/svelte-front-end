@@ -69,7 +69,7 @@
 
 		<!-- Profile -->
 		<a
-			href="#"
+			href={resolve('/profile')}
 			class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-full border-2 border-[#0057B7] py-[3px] pr-2.5 pl-[3px] no-underline
 				 transition-all duration-200
 				"
