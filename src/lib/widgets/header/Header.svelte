@@ -69,8 +69,10 @@
 
 		<!-- Auth -->
 		<a
-			href={resolve('/sign-in')}
-			class="ml-2 rounded-[10px] border border-stone-200 px-3.5 py-1.5 font-[Outfit] text-[13px] font-semibold text-stone-500 no-underline transition-all duration-150 hover:border-stone-300 hover:text-stone-900"
+			href={resolve('/profile')}
+			class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-full border-2 border-[#0057B7] py-[3px] pr-2.5 pl-[3px] no-underline
+				 transition-all duration-200
+				"
 		>
 			Увійти
 		</a>
