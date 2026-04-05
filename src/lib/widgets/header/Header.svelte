@@ -67,24 +67,20 @@
 			</div>
 		{/if}
 
-		<!-- Profile -->
+		<!-- Auth -->
 		<a
 			href={resolve('/profile')}
 			class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-full border-2 border-[#0057B7] py-[3px] pr-2.5 pl-[3px] no-underline
 				 transition-all duration-200
 				"
 		>
-			<div
-				class="grid h-[30px] w-[30px] place-items-center rounded-full bg-gradient-to-br from-[#0057B7] to-[#2563eb] text-[10px] font-extrabold text-white transition-transform duration-200"
-			>
-				ОК
-			</div>
-			<span
-				class="text-xs font-semibold
-					text-stone-500"
-			>
-				Олена
-			</span>
+			Увійти
+		</a>
+		<a
+			href={resolve('/sign-up')}
+			class="rounded-[10px] bg-[#0057B7] px-3.5 py-1.5 font-[Outfit] text-[13px] font-bold text-white no-underline shadow-[0_2px_8px_#0057B730] transition-all duration-150 hover:bg-[#0049a3]"
+		>
+			Реєстрація
 		</a>
 	</div>
 </nav>

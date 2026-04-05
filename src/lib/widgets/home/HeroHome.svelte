@@ -15,7 +15,7 @@
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
 </script>
 
-<section class="relative overflow-hidden bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
+<section class="relative bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
@@ -82,7 +82,7 @@
 		</p>
 
 		<!-- Search Bar -->
-		<div class="mx-auto mb-8 max-w-xl animate-up" style="animation-delay: 0.2s">
+		<div class="relative z-[1000] mx-auto mb-8 max-w-xl animate-up" style="animation-delay: 0.2s">
 			<SearchBar bind:query big onGo={onSearch} />
 		</div>
 
