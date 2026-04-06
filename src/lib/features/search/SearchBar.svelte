@@ -128,7 +128,7 @@
 	<!-- Dropdown -->
 	{#if dd}
 		<div
-			class="absolute top-[calc(100%+8px)] right-0 left-0 z-30 animate-pop rounded-[20px] bg-white p-2 shadow-[0_20px_60px_#00000014,0_0_0_1px_#0000000a]"
+			class="absolute top-[calc(100%+8px)] right-0 left-0 z-[1002] animate-pop rounded-[20px] bg-white p-2 shadow-[0_20px_60px_#00000014,0_0_0_1px_#0000000a]"
 		>
 			{#if query === ''}
 				<!-- Popular terms -->
