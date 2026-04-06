@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { CATS, ITEMS } from '$lib/entities/product/data';
+	import type { Category } from '$lib/entities/category';
 
 	let {
 		sort = $bindable('popular'),
 		viewMode = $bindable('list'),
 		expandAll = $bindable(false),
-		activeCat = null,
+		activeCat = $bindable<string | null>(null),
+		categories = [] as Category[],
 		totalItems = 0,
 		totalAlts = 0
 	}: {
@@ -13,11 +14,12 @@
 		viewMode?: string;
 		expandAll?: boolean;
 		activeCat?: string | null;
+		categories?: Category[];
 		totalItems?: number;
 		totalAlts?: number;
 	} = $props();
 
-	const activeCatObj = $derived(activeCat ? CATS.find((c) => c.slug === activeCat) : null);
+	const activeCatObj = $derived(activeCat ? categories.find((c) => c.title === activeCat) : null);
 
 	const sortOptions: [string, string][] = [
 		['popular', 'Популярні'],
@@ -41,7 +43,7 @@
 				class="inline-flex animate-scale-in items-center gap-[5px] rounded-full border border-[#0057B712] bg-[#0057B708] py-1 pr-2.5 pl-1.5"
 			>
 				<span class="text-sm">{activeCatObj.icon}</span>
-				<span class="text-[11px] font-bold text-[#0057B7]">{activeCatObj.name}</span>
+				<span class="text-[11px] font-bold text-[#0057B7]">{activeCatObj.title}</span>
 				<button
 					onclick={() => (activeCat = null)}
 					class="grid h-4 w-4 cursor-pointer place-items-center rounded-full border-none bg-[#0057B715] text-[9px] text-[#0057B7]"

@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { ITEMS, CATS, type Alternative } from '$lib/entities/product/data';
+	import type { PageData } from './$types';
+	import { ITEMS, type Alternative } from '$lib/entities/product/data';
 	import HeroCatalog from '$lib/widgets/catalog/HeroCatalog.svelte';
 	import CatalogSidebar from '$lib/widgets/catalog/CatalogSidebar.svelte';
 	import CategoryPills from '$lib/features/catalog-filter/CategoryPills.svelte';
 	import SortControls from '$lib/features/catalog-filter/SortControls.svelte';
 	import ItemBlock from '$lib/entities/product/ui/ItemBlock.svelte';
 	import GridCard from '$lib/entities/product/ui/GridCard.svelte';
+
+	let { data }: { data: PageData } = $props();
+
+	const categories = $derived(data.categories ?? []);
 
 	let cat = $state<string | null>(null);
 	let sort = $state('popular');
@@ -22,20 +26,19 @@
 		})
 	);
 	const totalAlts = $derived(sorted.reduce((s, it) => s + it.alts.length, 0));
-	const activeCatObj = $derived(cat ? CATS.find((c) => c.slug === cat) : null);
+	const activeCatObj = $derived(cat ? categories.find((c) => c.title === cat) : null);
 
 	function handleAltClick(a: Alternative) {
-		// Could open modal in layout via event dispatch
 		console.log('Alt clicked:', a.name);
 	}
 </script>
 
 <section class="mx-auto max-w-[1040px] px-6 pb-20">
-	<HeroCatalog />
+	<HeroCatalog categoriesCount={categories.length} />
 
 	<!-- Category pills -->
 	<div class="mb-7">
-		<CategoryPills bind:activeCat={cat} />
+		<CategoryPills bind:activeCat={cat} {categories} />
 	</div>
 
 	<!-- Toolbar -->
@@ -43,7 +46,8 @@
 		bind:sort
 		bind:viewMode
 		bind:expandAll
-		activeCat={cat}
+		bind:activeCat={cat}
+		{categories}
 		totalItems={sorted.length}
 		{totalAlts}
 	/>
@@ -52,11 +56,11 @@
 	<div class="flex items-start gap-6">
 		<!-- Sidebar (list mode only) -->
 		{#if viewMode === 'list'}
-			<CatalogSidebar bind:activeCat={cat} />
+			<CatalogSidebar bind:activeCat={cat} {categories} />
 		{/if}
 
 		<!-- Items -->
-		<div class="flex-1" class:key={`${cat}-${sort}-${viewMode}`}>
+		<div class="flex-1">
 			{#if sorted.length === 0}
 				<!-- Empty state -->
 				<div
@@ -93,7 +97,7 @@
 						Показано <strong class="text-stone-900">{sorted.length}</strong> продуктів з
 						<strong class="text-stone-900">{totalAlts}</strong> альтернативами
 						{#if cat && activeCatObj}
-							<span> в <strong class="text-[#0057B7]">{activeCatObj.name}</strong></span>
+							<span> в <strong class="text-[#0057B7]">{activeCatObj.title}</strong></span>
 						{/if}
 					</p>
 				</div>

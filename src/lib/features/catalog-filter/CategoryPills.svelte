@@ -1,16 +1,19 @@
 <script lang="ts">
-	import { CATS, ITEMS } from '$lib/entities/product/data';
+	import { ITEMS } from '$lib/entities/product/data';
+	import type { Category } from '$lib/entities/category';
 
 	let {
-		activeCat = $bindable<string | null>(null)
+		activeCat = $bindable<string | null>(null),
+		categories = []
 	}: {
 		activeCat?: string | null;
+		categories?: Category[];
 	} = $props();
 
 	let hovCat = $state<string | null>(null);
 
-	function countForCat(slug: string): number {
-		return ITEMS.filter((it) => it.cat === slug).length;
+	function countForCat(title: string): number {
+		return ITEMS.filter((it) => it.cat === title).length;
 	}
 </script>
 
@@ -31,14 +34,14 @@
 		<span class="ml-0.5 font-[JetBrains_Mono] text-[10px] opacity-50">{ITEMS.length}</span>
 	</button>
 
-	{#each CATS as c, i (c.slug)}
-		{@const count = countForCat(c.slug)}
-		{@const active = activeCat === c.slug}
-		{@const isHov = hovCat === c.slug}
+	{#each categories as c, i (c.id)}
+		{@const count = countForCat(c.title)}
+		{@const active = activeCat === c.title}
+		{@const isHov = hovCat === c.title}
 		{#if count > 0}
 			<button
-				onclick={() => (activeCat = active ? null : c.slug)}
-				onmouseenter={() => (hovCat = c.slug)}
+				onclick={() => (activeCat = active ? null : c.title)}
+				onmouseenter={() => (hovCat = c.title)}
 				onmouseleave={() => (hovCat = null)}
 				class="flex cursor-pointer items-center gap-[7px] rounded-[14px] px-4 py-2.5 pl-[11px] font-[Outfit] text-[13px] transition-all duration-[250ms]
 					{active
@@ -53,7 +56,7 @@
 					class="text-base transition-transform duration-200"
 					style={isHov ? 'transform: scale(1.2)' : ''}>{c.icon}</span
 				>
-				{c.name}
+				{c.title}
 				<span
 					class="rounded-[6px] px-1.5 py-px font-[JetBrains_Mono] text-[10px] font-semibold transition-all duration-200
 						{active ? 'bg-[#0057B712] text-[#0057B7]' : 'bg-stone-100 text-stone-400'}"

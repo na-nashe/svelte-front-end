@@ -1,16 +1,18 @@
 <script lang="ts">
 	import SearchBar from '$lib/features/search/SearchBar.svelte';
-	import { CATS } from '$lib/entities/product/data';
+	import type { Category } from '$lib/entities/category';
 
 	let {
 		query = $bindable(''),
-		onSearch
+		onSearch,
+		categories = []
 	}: {
 		query: string;
 		onSearch: (q: string) => void;
+		categories?: Category[];
 	} = $props();
 
-	const quickCats = CATS.slice(0, 6);
+	const quickCats = $derived(categories.slice(0, 6));
 
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
 </script>
@@ -91,16 +93,16 @@
 			class="mb-10 flex animate-up flex-wrap justify-center gap-2"
 			style="animation-delay: 0.25s"
 		>
-			{#each quickCats as c (c.slug)}
+			{#each quickCats as c (c.id)}
 				<button
 					onclick={() => {
-						query = c.name;
-						onSearch(c.name);
+						query = c.title;
+						onSearch(c.title);
 					}}
 					class="flex cursor-pointer items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-2 font-[Outfit] text-xs font-semibold text-stone-600 transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
 				>
 					<span>{c.icon}</span>
-					<span>{c.name}</span>
+					<span>{c.title}</span>
 				</button>
 			{/each}
 		</div>
