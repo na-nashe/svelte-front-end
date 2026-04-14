@@ -8,6 +8,10 @@ declare global {
 		// interface Locals {}
 		interface PageData {
 			categories?: Category[];
+<<<<<<< Updated upstream
+=======
+			alternativesTotal?: number;
+>>>>>>> Stashed changes
 		}
 		// interface PageState {}
 		// interface Platform {}
