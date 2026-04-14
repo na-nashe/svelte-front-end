@@ -1,14 +1,11 @@
 import type { LayoutServerLoad } from './$types';
 import { fetchCategories } from '$lib/entities/category/api';
 import { fetchAlternativesSummary } from '$lib/entities/alternative/api';
-import { getApiBaseURL } from '$lib/getApiBaseURL';
 
 export const load: LayoutServerLoad = async ({ fetch }) => {
-	const apiBase = getApiBaseURL();
-
 	const [categoriesResult, summaryResult] = await Promise.allSettled([
-		fetchCategories(fetch, apiBase),
-		fetchAlternativesSummary(fetch, apiBase)
+		fetchCategories(fetch),
+		fetchAlternativesSummary(fetch)
 	]);
 
 	const categories = categoriesResult.status === 'fulfilled' ? categoriesResult.value : [];
