@@ -5,11 +5,13 @@
 	let {
 		query = $bindable(''),
 		onSearch,
-		categories = []
+		categories = [],
+		alternativesTotal = null
 	}: {
 		query: string;
 		onSearch: (q: string) => void;
 		categories?: Category[];
+		alternativesTotal?: number | null;
 	} = $props();
 
 	const quickCats = $derived(categories.slice(0, 6));
@@ -17,7 +19,7 @@
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
 </script>
 
-<section class="relative bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
+<section class="relative overflow-hidden bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
@@ -57,7 +59,7 @@
 				<span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
 			</span>
 			<span class="font-[JetBrains_Mono] text-[11px] font-medium text-stone-500">
-				847 альтернатив · Оновлено сьогодні
+				{alternativesTotal != null ? alternativesTotal : 847} альтернатив · Оновлено сьогодні
 			</span>
 		</div>
 

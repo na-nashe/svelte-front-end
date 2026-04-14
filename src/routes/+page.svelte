@@ -17,7 +17,12 @@
 	}
 </script>
 
-<HeroHome bind:query onSearch={handleSearch} categories={data.categories ?? []} />
+<HeroHome
+	bind:query
+	onSearch={handleSearch}
+	categories={data.categories ?? []}
+	alternativesTotal={data.alternativesTotal ?? null}
+/>
 <ActivityTicker />
 <HowItWorks />
 <FeaturedBrands />

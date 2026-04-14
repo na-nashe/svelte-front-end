@@ -8,6 +8,7 @@ declare global {
 		// interface Locals {}
 		interface PageData {
 			categories?: Category[];
+			alternativesTotal?: number;
 		}
 		// interface PageState {}
 		// interface Platform {}
