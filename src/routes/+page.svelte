@@ -17,16 +17,12 @@
 	}
 </script>
 
-<<<<<<< Updated upstream
-<HeroHome bind:query onSearch={handleSearch} categories={data.categories ?? []} />
-=======
 <HeroHome
 	bind:query
 	onSearch={handleSearch}
 	categories={data.categories ?? []}
 	alternativesTotal={data.alternativesTotal ?? null}
 />
->>>>>>> Stashed changes
 <ActivityTicker />
 <HowItWorks />
 <FeaturedBrands />
