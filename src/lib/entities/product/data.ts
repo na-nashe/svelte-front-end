@@ -18,30 +18,12 @@ export interface Product {
 	alts: Alternative[];
 }
 
-export interface Category {
-	name: string;
-	icon: string;
-	n: number;
-	slug: string;
-}
-
-export const CATS: Category[] = [
-	{ name: 'Месенджери', icon: '💬', n: 24, slug: 'messengers' },
-	{ name: 'Браузери', icon: '🌐', n: 12, slug: 'browsers' },
-	{ name: 'Безпека', icon: '🔒', n: 18, slug: 'vpn' },
-	{ name: 'Офіс & Пошта', icon: '📄', n: 15, slug: 'office' },
-	{ name: 'Стрімінг', icon: '🎬', n: 9, slug: 'streaming' },
-	{ name: 'Їжа', icon: '🍕', n: 7, slug: 'food' },
-	{ name: 'Таксі', icon: '🚕', n: 5, slug: 'taxi' },
-	{ name: 'Банкінг', icon: '🏦', n: 11, slug: 'banking' }
-];
-
 export const ITEMS: Product[] = [
 	{
 		orig: 'Telegram',
 		flag: '🇷🇺',
 		kw: ['telegram', 'телеграм', 'телега', 'тг', 'дуров'],
-		cat: 'messengers',
+		cat: 'Месенджери',
 		alts: [
 			{
 				name: 'Signal',
@@ -82,7 +64,7 @@ export const ITEMS: Product[] = [
 		orig: 'Yandex Browser',
 		flag: '🇷🇺',
 		kw: ['yandex', 'яндекс', 'браузер'],
-		cat: 'browsers',
+		cat: 'Браузери',
 		alts: [
 			{
 				name: 'Brave',
@@ -112,7 +94,7 @@ export const ITEMS: Product[] = [
 		orig: 'Касперський',
 		flag: '🇷🇺',
 		kw: ['kaspersky', 'касперський', 'каспер', 'антивірус'],
-		cat: 'vpn',
+		cat: 'Безпека',
 		alts: [
 			{
 				name: 'ESET NOD32',
@@ -142,7 +124,7 @@ export const ITEMS: Product[] = [
 		orig: 'VK (ВКонтакте)',
 		flag: '🇷🇺',
 		kw: ['vk', 'вк', 'вконтакте', 'соцмережа'],
-		cat: 'messengers',
+		cat: 'Месенджери',
 		alts: [
 			{
 				name: 'Instagram',
@@ -172,7 +154,7 @@ export const ITEMS: Product[] = [
 		orig: '1С Бухгалтерія',
 		flag: '🇷🇺',
 		kw: ['1с', '1c', 'бухгалтерія', 'облік', 'erp'],
-		cat: 'office',
+		cat: 'Офіс & Пошта',
 		alts: [
 			{
 				name: 'BAS',
@@ -202,7 +184,7 @@ export const ITEMS: Product[] = [
 		orig: 'Mail.ru',
 		flag: '🇷🇺',
 		kw: ['mail.ru', 'мейл', 'пошта', 'email'],
-		cat: 'office',
+		cat: 'Офіс & Пошта',
 		alts: [
 			{
 				name: 'Gmail',
@@ -243,7 +225,7 @@ export const ITEMS: Product[] = [
 		orig: 'Яндекс.Таксі',
 		flag: '🇷🇺',
 		kw: ['яндекс таксі', 'таксі', 'taxi'],
-		cat: 'taxi',
+		cat: 'Таксі',
 		alts: [
 			{
 				name: 'Uklon',
@@ -273,7 +255,7 @@ export const ITEMS: Product[] = [
 		orig: 'Кинопоиск',
 		flag: '🇷🇺',
 		kw: ['кинопоиск', 'кіно', 'фільми', 'стрімінг'],
-		cat: 'streaming',
+		cat: 'Стрімінг',
 		alts: [
 			{
 				name: 'Megogo',

@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { CATS, ITEMS } from '$lib/entities/product/data';
+	import { ITEMS } from '$lib/entities/product/data';
+	import type { Category } from '$lib/entities/category';
 
 	let {
-		activeCat = $bindable<string | null>(null)
+		activeCat = $bindable<string | null>(null),
+		categories = []
 	}: {
 		activeCat?: string | null;
+		categories?: Category[];
 	} = $props();
 
-	function countForCat(slug: string): number {
-		return ITEMS.filter((it) => it.cat === slug).length;
+	function countForCat(title: string): number {
+		return ITEMS.filter((it) => it.cat === title).length;
 	}
 
 	const insights = [
@@ -24,12 +27,12 @@
 	>
 		Навігація
 	</p>
-	{#each CATS as c, i (c.slug)}
-		{@const count = countForCat(c.slug)}
-		{@const active = activeCat === c.slug}
+	{#each categories as c, i (c.id)}
+		{@const count = countForCat(c.title)}
+		{@const active = activeCat === c.title}
 		{#if count > 0}
 			<button
-				onclick={() => (activeCat = active ? null : c.slug)}
+				onclick={() => (activeCat = active ? null : c.title)}
 				class="mb-px flex w-full animate-slide-r cursor-pointer items-center gap-2 rounded-[10px] border-none px-2.5 py-[9px] font-[Outfit] text-xs transition-all duration-200
 					{active
 					? 'bg-[#0057B708] font-bold text-[#0057B7]'
@@ -37,7 +40,7 @@
 				style="animation-delay: {i * 0.03}s"
 			>
 				<span class="text-sm">{c.icon}</span>
-				<span class="flex-1 text-left">{c.name}</span>
+				<span class="flex-1 text-left">{c.title}</span>
 				<span
 					class="rounded-[5px] px-1.5 py-px font-[JetBrains_Mono] text-[10px]
 						{active ? 'bg-[#0057B70a] text-[#0057B7]' : 'bg-stone-100 text-stone-300'}">{count}</span

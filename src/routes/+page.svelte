@@ -4,6 +4,9 @@
 	import HowItWorks from '$lib/widgets/home/HowItWorks.svelte';
 	import FeaturedBrands from '$lib/widgets/home/FeaturedBrands.svelte';
 	import DualCta from '$lib/widgets/home/DualCta.svelte';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	let query = $state('');
 
@@ -14,7 +17,12 @@
 	}
 </script>
 
-<HeroHome bind:query onSearch={handleSearch} />
+<HeroHome
+	bind:query
+	onSearch={handleSearch}
+	categories={data.categories ?? []}
+	alternativesTotal={data.alternativesTotal ?? null}
+/>
 <ActivityTicker />
 <HowItWorks />
 <FeaturedBrands />

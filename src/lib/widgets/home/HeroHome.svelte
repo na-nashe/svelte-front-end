@@ -1,21 +1,25 @@
 <script lang="ts">
 	import SearchBar from '$lib/features/search/SearchBar.svelte';
-	import { CATS } from '$lib/entities/product/data';
+	import type { Category } from '$lib/entities/category';
 
 	let {
 		query = $bindable(''),
-		onSearch
+		onSearch,
+		categories = [],
+		alternativesTotal = null
 	}: {
 		query: string;
 		onSearch: (q: string) => void;
+		categories?: Category[];
+		alternativesTotal?: number | null;
 	} = $props();
 
-	const quickCats = CATS.slice(0, 6);
+	const quickCats = $derived(categories.slice(0, 6));
 
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
 </script>
 
-<section class="relative bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
+<section class="relative overflow-hidden bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
@@ -55,7 +59,7 @@
 				<span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
 			</span>
 			<span class="font-[JetBrains_Mono] text-[11px] font-medium text-stone-500">
-				847 альтернатив · Оновлено сьогодні
+				{alternativesTotal != null ? alternativesTotal : 0} альтернатив · Оновлено сьогодні
 			</span>
 		</div>
 
@@ -91,16 +95,16 @@
 			class="mb-10 flex animate-up flex-wrap justify-center gap-2"
 			style="animation-delay: 0.25s"
 		>
-			{#each quickCats as c (c.slug)}
+			{#each quickCats as c (c.id)}
 				<button
 					onclick={() => {
-						query = c.name;
-						onSearch(c.name);
+						query = c.title;
+						onSearch(c.title);
 					}}
 					class="flex cursor-pointer items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-2 font-[Outfit] text-xs font-semibold text-stone-600 transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
 				>
 					<span>{c.icon}</span>
-					<span>{c.name}</span>
+					<span>{c.title}</span>
 				</button>
 			{/each}
 		</div>

@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { ITEMS, CATS } from '$lib/entities/product/data';
+	import { ITEMS } from '$lib/entities/product/data';
+
+	let { categoriesCount = 0 }: { categoriesCount?: number } = $props();
 
 	const totalProducts = ITEMS.length;
 	const totalAlts = ITEMS.reduce((s, it) => s + it.alts.length, 0);
-	const totalCats = CATS.length;
+	const totalCats = categoriesCount;
 
 	const topAlts = ITEMS.flatMap((it) => it.alts.map((a) => ({ ...a, from: it.orig, ff: it.flag })))
 		.sort((a, b) => b.ratio - a.ratio)
