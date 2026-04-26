@@ -15,7 +15,7 @@
 		{#each cards as card (card.href)}
 			<a
 				href={card.href}
-				class="w-full max-w-[420px] group relative overflow-hidden rounded-3xl p-8 text-white no-underline transition-all duration-300 hover:-translate-y-[3px] hover:shadow-2xl sm:p-10"
+				class="group relative w-full max-w-[420px] overflow-hidden rounded-3xl p-8 text-white no-underline transition-all duration-300 hover:-translate-y-[3px] hover:shadow-2xl sm:p-10"
 				style="background: {card.gradient}"
 			>
 				<!-- Floating gold orb -->

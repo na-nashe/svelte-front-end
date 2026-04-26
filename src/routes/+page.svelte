@@ -13,7 +13,7 @@
 	function handleSearch(q: string) {
 		const t = q.trim();
 		if (!t) return;
-		window.location.href = `/catalog?q=${encodeURIComponent(t)}`;
+		window.location.href = `/results?q=${encodeURIComponent(t)}`;
 	}
 </script>
 
