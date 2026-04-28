@@ -6,6 +6,29 @@
 	let password = $state('');
 	let showPassword = $state(false);
 	let agree = $state(false);
+
+	async function handleSignUp(event: Event) {
+  event.preventDefault();
+
+  const response = await fetch('http://localhost:8080/auth/singup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username: name,
+      email: email,
+      password: password
+    })
+  });
+
+  if (response.ok) {
+    alert('Успіх!');
+  } else {
+    alert('Помилка сервера');
+  }
+}
+
 </script>
 
 <svelte:head>
@@ -40,7 +63,7 @@
 			<h1 class="mb-1 font-[Outfit] text-2xl font-black text-stone-900">Реєстрація</h1>
 			<p class="mb-7 font-[Outfit] text-sm text-stone-400">Приєднуйся до спільноти 🇺🇦</p>
 
-			<form onsubmit={(e) => e.preventDefault()} class="flex flex-col gap-4">
+			<form onsubmit={handleSignUp} class="flex flex-col gap-4">
 				<!-- Name -->
 				<div class="flex flex-col gap-1.5">
 					<label for="name" class="font-[Outfit] text-xs font-semibold text-stone-500">

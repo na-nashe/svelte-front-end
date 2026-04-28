@@ -1,4 +1,4 @@
-/// <reference types="vitest/config" />
+// <reference types="vitest/config" />
 import devtoolsJson from 'vite-plugin-devtools-json';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
@@ -71,4 +71,5 @@ export default defineConfig({
 			}
 		]
 	}
+	
 });
