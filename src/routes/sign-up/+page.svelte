@@ -10,7 +10,7 @@
 	async function handleSignUp(event: Event) {
   event.preventDefault();
 
-  const response = await fetch('http://localhost:8080/auth/singup', {
+  const response = await fetch('/auth/singup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
