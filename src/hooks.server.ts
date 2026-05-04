@@ -1,7 +1,9 @@
 import { getApiBaseURL } from '$lib/getApiBaseURL';
-import type { HandleFetch } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleFetch } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
 
 const API_PREFIX = '/api';
+const PROTECTED_ROUTES = ['/profile'];
 
 export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 	const url = new URL(request.url);
@@ -11,3 +13,21 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 	}
 	return fetch(request);
 };
+
+const authHandle: Handle = async ({ event, resolve }) => {
+	const token = event.cookies.get('token');
+	event.locals.token = token ?? null;
+	event.locals.isAuthenticated = !!token;
+
+	const isProtected = PROTECTED_ROUTES.some((route) =>
+		event.url.pathname.startsWith(route)
+	);
+
+	if (isProtected && !token) {
+		redirect(303, '/sign-in');
+	}
+
+	return resolve(event);
+};
+
+export const handle = sequence(authHandle);

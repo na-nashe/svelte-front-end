@@ -5,7 +5,10 @@ import type { Category } from '$lib/entities/category/types';
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			token: string | null;
+    		isAuthenticated: boolean;
+		}
 		interface PageData {
 			categories?: Category[];
 			alternativesTotal?: number;

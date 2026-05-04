@@ -1,34 +1,17 @@
 <script lang="ts">
+	import { superForm } from 'sveltekit-superforms';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import { signUpSchema } from '$lib/schemas/auth';
 	import { resolve } from '$app/paths';
 
-	let name = $state('');
-	let email = $state('');
-	let password = $state('');
+	let { data } = $props();
+
+	const { form, errors, enhance, submitting, message } = superForm(data.form, {
+		validators: zod4Client(signUpSchema),
+		resetForm: false
+	});
+
 	let showPassword = $state(false);
-	let agree = $state(false);
-
-	async function handleSignUp(event: Event) {
-  event.preventDefault();
-
-  const response = await fetch('/auth/singup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: name,
-      email: email,
-      password: password
-    })
-  });
-
-  if (response.ok) {
-    alert('Успіх!');
-  } else {
-    alert('Помилка сервера');
-  }
-}
-
 </script>
 
 <svelte:head>
@@ -63,7 +46,14 @@
 			<h1 class="mb-1 font-[Outfit] text-2xl font-black text-stone-900">Реєстрація</h1>
 			<p class="mb-7 font-[Outfit] text-sm text-stone-400">Приєднуйся до спільноти 🇺🇦</p>
 
-			<form onsubmit={handleSignUp} class="flex flex-col gap-4">
+			<!-- Server error message -->
+			{#if $message}
+				<div class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600">
+					{$message}
+				</div>
+			{/if}
+
+			<form method="POST" use:enhance class="flex flex-col gap-4">
 				<!-- Name -->
 				<div class="flex flex-col gap-1.5">
 					<label for="name" class="font-[Outfit] text-xs font-semibold text-stone-500">
@@ -71,12 +61,18 @@
 					</label>
 					<input
 						id="name"
+						name="name"
 						type="text"
-						bind:value={name}
+						bind:value={$form.name}
 						placeholder="Олена Петренко"
 						autocomplete="name"
-						class="w-full rounded-[11px] border border-stone-200 bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:border-[#0057B7] focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10"
+						aria-invalid={!!$errors.name}
+						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+							{$errors.name ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
 					/>
+					{#if $errors.name}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.name}</span>
+					{/if}
 				</div>
 
 				<!-- Email -->
@@ -86,12 +82,18 @@
 					</label>
 					<input
 						id="email"
+						name="email"
 						type="email"
-						bind:value={email}
+						bind:value={$form.email}
 						placeholder="you@example.com"
 						autocomplete="email"
-						class="w-full rounded-[11px] border border-stone-200 bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:border-[#0057B7] focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10"
+						aria-invalid={!!$errors.email}
+						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+							{$errors.email ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
 					/>
+					{#if $errors.email}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.email}</span>
+					{/if}
 				</div>
 
 				<!-- Password -->
@@ -102,11 +104,14 @@
 					<div class="relative">
 						<input
 							id="password"
+							name="password"
 							type={showPassword ? 'text' : 'password'}
-							bind:value={password}
+							bind:value={$form.password}
 							placeholder="Мінімум 8 символів"
 							autocomplete="new-password"
-							class="w-full rounded-[11px] border border-stone-200 bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:border-[#0057B7] focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10"
+							aria-invalid={!!$errors.password}
+							class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+								{$errors.password ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
 						/>
 						<button
 							type="button"
@@ -128,9 +133,10 @@
 							{/if}
 						</button>
 					</div>
+
 					<!-- Password strength indicator -->
-					{#if password.length > 0}
-						{@const strength = password.length < 6 ? 0 : password.length < 10 ? 1 : 2}
+					{#if ($form.password?.length ?? 0) > 0}
+						{@const strength = ($form.password?.length ?? 0) < 6 ? 0 : ($form.password?.length ?? 0) < 10 ? 1 : 2}
 						<div class="flex gap-1 pt-0.5">
 							{#each [0, 1, 2] as bar (bar)}
 								<div
@@ -142,30 +148,50 @@
 							{/each}
 						</div>
 					{/if}
+
+					{#if $errors.password}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.password}</span>
+					{/if}
 				</div>
 
 				<!-- Agree -->
-				<label class="flex cursor-pointer items-start gap-2.5 pt-0.5">
-					<input
-						type="checkbox"
-						bind:checked={agree}
-						class="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer rounded accent-[#0057B7]"
-					/>
-					<span class="font-[Outfit] text-xs leading-relaxed text-stone-400">
-						Я погоджуюсь з
-						<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">умовами використання</a>
-						та
-						<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">політикою конфіденційності</a>
-					</span>
-				</label>
+				<div class="flex flex-col gap-1.5">
+					<label class="flex cursor-pointer items-start gap-2.5 pt-0.5">
+						<input
+							type="checkbox"
+							name="agree"
+							bind:checked={$form.agree}
+							class="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer rounded accent-[#0057B7]"
+						/>
+						<span class="font-[Outfit] text-xs leading-relaxed text-stone-400">
+							Я погоджуюсь з
+							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">умовами використання</a>
+							та
+							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">політикою конфіденційності</a>
+						</span>
+					</label>
+					{#if $errors.agree}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.agree}</span>
+					{/if}
+				</div>
 
 				<!-- Submit -->
 				<button
 					type="submit"
-					disabled={!agree}
+					disabled={$submitting}
 					class="mt-1 w-full rounded-[11px] bg-[#0057B7] px-4 py-2.5 font-[Outfit] text-sm font-bold text-white shadow-[0_4px_16px_#0057B730] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0049a3] hover:shadow-[0_6px_20px_#0057B740] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-[0_4px_16px_#0057B730]"
 				>
-					Створити акаунт
+					{#if $submitting}
+						<span class="flex items-center justify-center gap-2">
+							<svg class="h-4 w-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+							</svg>
+							Створення акаунту...
+						</span>
+					{:else}
+						Створити акаунт
+					{/if}
 				</button>
 			</form>
 
