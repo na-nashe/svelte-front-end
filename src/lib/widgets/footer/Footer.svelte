@@ -14,7 +14,6 @@
 		</div>
 		<div class="flex gap-5">
 			{#each links as link (link.label)}
-
 				<a
 					href={link.href}
 					class="text-xs text-stone-400 no-underline transition-colors duration-150 hover:text-stone-900"

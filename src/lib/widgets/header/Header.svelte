@@ -26,9 +26,9 @@
 
 	const showSearch = $derived(
 		currentPath !== '/' &&
-		currentPath !== '/profile' &&
-		currentPath !== '/sign-in' &&
-		currentPath !== '/sign-up'
+			currentPath !== '/profile' &&
+			currentPath !== '/sign-in' &&
+			currentPath !== '/sign-up'
 	);
 </script>
 
@@ -75,8 +75,8 @@
 		<!-- Auth -->
 		<a
 			href={resolve('/profile')}
-			class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-[10px] border-2 border-[#0057B7]  px-3 py-1 no-underline
-				 transition-all duration-200 font-[Outfit] text-[13px] font-bold text-[#0057B7]
+			class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-[10px] border-2 border-[#0057B7] px-3 py-1 font-[Outfit]
+				 text-[13px] font-bold text-[#0057B7] no-underline transition-all duration-200
 				"
 		>
 			Увійти
