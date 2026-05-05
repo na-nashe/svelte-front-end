@@ -15,7 +15,7 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 };
 
 const authHandle: Handle = async ({ event, resolve }) => {
-	const token = event.cookies.get('token');
+	const token = event.cookies.get('access_token');
 	event.locals.token = token ?? null;
 	event.locals.isAuthenticated = !!token;
 

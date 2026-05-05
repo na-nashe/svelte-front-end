@@ -16,14 +16,18 @@ export async function POST({ request, cookies }: RequestEvent) {
 			return json(err, { status: javaResponse.status });
 		}
 
-		const { token } = await javaResponse.json();
+		const accessToken = javaResponse.headers.get('Authorization')?.replace('Bearer ', '');
 
-		cookies.set('token', token, {
+		if (!accessToken) {
+			return json({ error: 'Токен не отримано' }, { status: 500 });
+		}
+
+		cookies.set('access_token', accessToken, {
 			httpOnly: true,
 			secure: true,
 			sameSite: 'strict',
 			path: '/',
-			maxAge: 60 * 60 * 24 * 7 
+			maxAge: 60 * 15
 		});
 
 		return json({ ok: true });
