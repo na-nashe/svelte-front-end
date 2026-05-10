@@ -6,17 +6,11 @@
 
 	let { data } = $props();
 
-	const { form, errors, enhance, submitting, message, allErrors } = superForm(data.form, {
+	const { form, errors, enhance, submitting, message } = superForm(data.form, {
 		validators: zod4Client(signUpSchema),
 		resetForm: false
 	});
-	$effect(() => {
-		console.log(
-			allErrors.subscribe((error) => {
-				console.log(error);
-			})
-		);
-	});
+
 	let showPassword = $state(false);
 </script>
 
