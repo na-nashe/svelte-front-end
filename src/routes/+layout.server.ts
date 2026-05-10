@@ -2,7 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import { fetchCategories } from '$lib/entities/category/api';
 import { fetchAlternativesSummary } from '$lib/entities/alternative/api';
 
-export const load: LayoutServerLoad = async ({ fetch }) => {
+export const load: LayoutServerLoad = async ({ fetch, locals }) => {
 	const [categoriesResult, summaryResult] = await Promise.allSettled([
 		fetchCategories(fetch),
 		fetchAlternativesSummary(fetch)
@@ -18,5 +18,5 @@ export const load: LayoutServerLoad = async ({ fetch }) => {
 		console.error('[layout] Failed to fetch alternatives summary:', summaryResult.reason);
 	}
 
-	return { categories, alternativesTotal };
+	return { categories, alternativesTotal, isAuthenticated: locals.isAuthenticated };
 };

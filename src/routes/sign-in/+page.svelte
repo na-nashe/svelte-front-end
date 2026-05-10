@@ -1,8 +1,16 @@
 <script lang="ts">
+	import { superForm } from 'sveltekit-superforms';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import { signInSchema } from '$lib/schemas/auth';
 	import { resolve } from '$app/paths';
 
-	let email = $state('');
-	let password = $state('');
+	let { data } = $props();
+
+	const { form, errors, enhance, submitting, message } = superForm(data.form, {
+		validators: zod4Client(signInSchema),
+		resetForm: false
+	});
+
 	let showPassword = $state(false);
 </script>
 
@@ -40,7 +48,14 @@
 			<h1 class="mb-1 font-[Outfit] text-2xl font-black text-stone-900">Вхід</h1>
 			<p class="mb-7 font-[Outfit] text-sm text-stone-400">Раді бачити тебе знову 👋</p>
 
-			<form onsubmit={(e) => e.preventDefault()} class="flex flex-col gap-4">
+			<!-- Server error message -->
+			{#if $message}
+				<div class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600">
+					{$message}
+				</div>
+			{/if}
+
+			<form method="POST" use:enhance class="flex flex-col gap-4">
 				<!-- Email -->
 				<div class="flex flex-col gap-1.5">
 					<label for="email" class="font-[Outfit] text-xs font-semibold text-stone-500">
@@ -48,12 +63,18 @@
 					</label>
 					<input
 						id="email"
+						name="email"
 						type="email"
-						bind:value={email}
+						bind:value={$form.email}
 						placeholder="you@example.com"
 						autocomplete="email"
-						class="w-full rounded-[11px] border border-stone-200 bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:border-[#0057B7] focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10"
+						aria-invalid={!!$errors.email}
+						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+							{$errors.email ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
 					/>
+					{#if $errors.email}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.email}</span>
+					{/if}
 				</div>
 
 				<!-- Password -->
@@ -72,11 +93,14 @@
 					<div class="relative">
 						<input
 							id="password"
+							name="password"
 							type={showPassword ? 'text' : 'password'}
-							bind:value={password}
+							bind:value={$form.password}
 							placeholder="••••••••"
 							autocomplete="current-password"
-							class="w-full rounded-[11px] border border-stone-200 bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:border-[#0057B7] focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10"
+							aria-invalid={!!$errors.password}
+							class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+								{$errors.password ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
 						/>
 						<button
 							type="button"
@@ -120,14 +144,28 @@
 							{/if}
 						</button>
 					</div>
+					{#if $errors.password}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.password}</span>
+					{/if}
 				</div>
 
 				<!-- Submit -->
 				<button
 					type="submit"
-					class="mt-1 w-full rounded-[11px] bg-[#0057B7] px-4 py-2.5 font-[Outfit] text-sm font-bold text-white shadow-[0_4px_16px_#0057B730] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0049a3] hover:shadow-[0_6px_20px_#0057B740] active:translate-y-0"
+					disabled={$submitting}
+					class="mt-1 w-full rounded-[11px] bg-[#0057B7] px-4 py-2.5 font-[Outfit] text-sm font-bold text-white shadow-[0_4px_16px_#0057B730] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0049a3] hover:shadow-[0_6px_20px_#0057B740] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-[0_4px_16px_#0057B730]"
 				>
-					Увійти
+					{#if $submitting}
+						<span class="flex items-center justify-center gap-2">
+							<svg class="h-4 w-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+							</svg>
+							Вхід...
+						</span>
+					{:else}
+						Увійти
+					{/if}
 				</button>
 			</form>
 

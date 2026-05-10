@@ -50,7 +50,9 @@
 
 			<!-- Server error message -->
 			{#if $message}
-				<div class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600">
+				<div
+					class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600"
+				>
 					{$message}
 				</div>
 			{/if}
@@ -62,19 +64,20 @@
 						Імʼя
 					</label>
 					<input
-						id="name"
-						name="name"
+						id="username"
+						name="username"
 						type="text"
-						bind:value={$form.name}
+						bind:value={$form.username}
 						placeholder="Олена Петренко"
-						autocomplete="name"
-						aria-invalid={!!$errors.name}
-						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
-							{$errors.name ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
-
+						autocomplete="username"
+						aria-invalid={!!$errors.username}
+						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+							{$errors.username
+							? 'border-red-300 focus:border-red-400'
+							: 'border-stone-200 focus:border-[#0057B7]'}"
 					/>
-					{#if $errors.name}
-						<span class="font-[Outfit] text-xs text-red-500">{$errors.name}</span>
+					{#if $errors.username}
+						<span class="font-[Outfit] text-xs text-red-500">{$errors.username}</span>
 					{/if}
 				</div>
 
@@ -91,9 +94,8 @@
 						placeholder="you@example.com"
 						autocomplete="email"
 						aria-invalid={!!$errors.email}
-						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+						class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
 							{$errors.email ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
-
 					/>
 					{#if $errors.email}
 						<span class="font-[Outfit] text-xs text-red-500">{$errors.email}</span>
@@ -114,8 +116,10 @@
 							placeholder="Мінімум 8 символів"
 							autocomplete="new-password"
 							aria-invalid={!!$errors.password}
-							class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 outline-none transition-all duration-150 placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
-								{$errors.password ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
+							class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
+								{$errors.password
+								? 'border-red-300 focus:border-red-400'
+								: 'border-stone-200 focus:border-[#0057B7]'}"
 						/>
 						<button
 							type="button"
@@ -162,7 +166,8 @@
 
 					<!-- Password strength indicator -->
 					{#if ($form.password?.length ?? 0) > 0}
-						{@const strength = ($form.password?.length ?? 0) < 6 ? 0 : ($form.password?.length ?? 0) < 10 ? 1 : 2}
+						{@const strength =
+							($form.password?.length ?? 0) < 6 ? 0 : ($form.password?.length ?? 0) < 10 ? 1 : 2}
 						<div class="flex gap-1 pt-0.5">
 							{#each [0, 1, 2] as bar (bar)}
 								<div
@@ -195,9 +200,13 @@
 						/>
 						<span class="font-[Outfit] text-xs leading-relaxed text-stone-400">
 							Я погоджуюсь з
-							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">умовами використання</a>
+							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline"
+								>умовами використання</a
+							>
 							та
-							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline">політикою конфіденційності</a>
+							<a href={resolve('/about')} class="text-[#0057B7] no-underline hover:underline"
+								>політикою конфіденційності</a
+							>
 						</span>
 					</label>
 					{#if $errors.agree}
@@ -213,9 +222,25 @@
 				>
 					{#if $submitting}
 						<span class="flex items-center justify-center gap-2">
-							<svg class="h-4 w-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+							<svg
+								class="h-4 w-4 animate-spin text-white"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									class="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									stroke-width="4"
+								></circle>
+								<path
+									class="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+								></path>
 							</svg>
 							Створення акаунту...
 						</span>

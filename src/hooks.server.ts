@@ -4,6 +4,7 @@ import { sequence } from '@sveltejs/kit/hooks';
 
 const API_PREFIX = '/api';
 const PROTECTED_ROUTES = ['/profile'];
+const AUTH_ONLY_ROUTES = ['/sign-in', '/sign-up'];
 
 export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 	const url = new URL(request.url);
@@ -19,12 +20,16 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	event.locals.token = token ?? null;
 	event.locals.isAuthenticated = !!token;
 
-	const isProtected = PROTECTED_ROUTES.some((route) =>
-		event.url.pathname.startsWith(route)
-	);
+	const pathname = event.url.pathname;
 
+	const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
 	if (isProtected && !token) {
 		redirect(303, '/sign-in');
+	}
+
+	const isAuthOnly = AUTH_ONLY_ROUTES.some((route) => pathname.startsWith(route));
+	if (isAuthOnly && token) {
+		redirect(303, '/');
 	}
 
 	return resolve(event);
