@@ -20,8 +20,6 @@
 		)
 	);
 
-	const totalAlts = $derived(localResults.reduce((s, r) => s + r.alts.length, 0));
-
 	let apiLoading = $state(false);
 	let apiError = $state<string | null>(null);
 	let apiResults = $state<AlternativeSearchItem[]>([]);
@@ -72,7 +70,6 @@
 		>
 		<div>
 			<h2 class="text-[22px] font-extrabold tracking-tight">«{query}»</h2>
-			<span class="font-[JetBrains_Mono] text-xs text-stone-400">{totalAlts} альтернатив</span>
 		</div>
 	</div>
 
