@@ -52,9 +52,6 @@
 						></span>
 						<span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
 					</span>
-					<span class="font-[JetBrains_Mono] text-[11px] font-medium text-stone-400">
-						Оновлено сьогодні
-					</span>
 				</div>
 
 				<h1

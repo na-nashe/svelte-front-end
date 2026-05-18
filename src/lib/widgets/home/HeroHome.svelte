@@ -17,6 +17,7 @@
 	const quickCats = $derived(categories.slice(0, 6));
 
 	const orbitIcons = ['💬', '🌐', '🔒', '📄', '🎬', '🚕'];
+	const hasAlternatives = !!alternativesTotal;
 </script>
 
 <section class="relative overflow-hidden bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
@@ -59,7 +60,7 @@
 				<span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
 			</span>
 			<span class="font-[JetBrains_Mono] text-[11px] font-medium text-stone-500">
-				{alternativesTotal != null ? alternativesTotal : 0} альтернатив · Оновлено сьогодні
+				{alternativesTotal || 0} альтернатив
 			</span>
 		</div>
 

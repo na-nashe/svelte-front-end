@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ITEMS, type Alternative } from '$lib/entities/product/data';
+	import type { Product, Alternative } from '$lib/entities/product/data';
+	import type { ApiProduct, ApiAlternative } from '$lib/entities/product/types';
 	import HeroCatalog from '$lib/widgets/catalog/HeroCatalog.svelte';
 	import CatalogSidebar from '$lib/widgets/catalog/CatalogSidebar.svelte';
 	import CategoryPills from '$lib/features/catalog-filter/CategoryPills.svelte';
@@ -12,12 +13,56 @@
 
 	const categories = $derived(data.categories ?? []);
 
+	const PALETTE = [
+		'#3A76F0', '#7360F2', '#25D366', '#EA4335', '#FF6B00',
+		'#6D4AFF', '#00B956', '#E4405F', '#FB542B', '#34D186'
+	];
+
+	function colorFromName(name: string): string {
+		let hash = 0;
+		for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) & 0xffffffff;
+		return PALETTE[Math.abs(hash) % PALETTE.length];
+	}
+
+	function initialsFromName(name: string): string {
+		const parts = name.trim().split(/\s+/);
+		return parts.length > 1
+			? (parts[0][0] + parts[1][0]).toUpperCase()
+			: name.slice(0, 2).toUpperCase();
+	}
+
+	function mapAlternative(a: ApiAlternative): Alternative {
+		return {
+			name: a.name,
+			c2: a.country,
+			ratio: 0,
+			r: 0,
+			rev: 0,
+			L: initialsFromName(a.name),
+			cl: colorFromName(a.name),
+			pr: 'free',
+			d: a.description ?? ''
+		};
+	}
+
+	function mapProduct(p: ApiProduct): Product {
+		return {
+			orig: p.name,
+			flag: p.origin,
+			kw: p.aliases,
+			cat: p.category,
+			alts: p.alternatives.map(mapAlternative)
+		};
+	}
+
+	const items = $derived((data.products ?? []).map(mapProduct));
+
 	let cat = $state<string | null>(null);
 	let sort = $state('popular');
 	let viewMode = $state('list');
 	let expandAll = $state(false);
 
-	const filtered = $derived(cat ? ITEMS.filter((it) => it.cat === cat) : ITEMS);
+	const filtered = $derived(cat ? items.filter((it) => it.cat === cat) : items);
 	const sorted = $derived(
 		[...filtered].sort((a, b) => {
 			if (sort === 'alts') return b.alts.length - a.alts.length;
@@ -61,8 +106,21 @@
 
 		<!-- Items -->
 		<div class="flex-1">
-			{#if sorted.length === 0}
-				<!-- Empty state -->
+			{#if items.length === 0 && !data.isAuthenticated}
+				<div class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center">
+					<div class="mb-4 animate-float text-5xl">🔒</div>
+					<h3 class="mb-2 text-xl font-extrabold">Увійдіть, щоб переглянути каталог</h3>
+					<p class="mx-auto mb-5 max-w-[300px] text-sm text-stone-500">
+						Для перегляду продуктів необхідна авторизація
+					</p>
+					<a
+						href="/sign-in"
+						class="inline-block cursor-pointer rounded-xl border-[1.5px] border-[#0057B7] bg-[#0057B7] px-6 py-2.5 font-[Outfit] text-[13px] font-bold text-white transition-colors hover:bg-[#0046a0]"
+					>
+						Увійти
+					</a>
+				</div>
+			{:else if sorted.length === 0}
 				<div
 					class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center"
 				>
