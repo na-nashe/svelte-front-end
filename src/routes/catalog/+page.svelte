@@ -98,7 +98,7 @@
 	/>
 
 	<!-- Main area -->
-	<div class="flex items-start gap-6">
+	<div class="flex flex-col gap-6 md:flex-row md:items-start">
 		<!-- Sidebar (list mode only) -->
 		{#if viewMode === 'list'}
 			<CatalogSidebar bind:activeCat={cat} {categories} />

@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2 mt-6">
 	<!-- All button -->
 	<button
 		onclick={() => (activeCat = null)}
