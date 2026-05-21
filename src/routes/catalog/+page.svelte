@@ -40,7 +40,7 @@
 			rev: 0,
 			L: initialsFromName(a.name),
 			cl: colorFromName(a.name),
-			pr: 'free',
+			pr: a.pricing_model,
 			d: a.description ?? '',
 			url: a.url
 		};
