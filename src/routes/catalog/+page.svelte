@@ -40,8 +40,9 @@
 			rev: 0,
 			L: initialsFromName(a.name),
 			cl: colorFromName(a.name),
-			pr: 'free',
-			d: a.description ?? ''
+			pr: a.pricing_model,
+			d: a.description ?? '',
+			url: a.url
 		};
 	}
 
@@ -98,7 +99,7 @@
 	/>
 
 	<!-- Main area -->
-	<div class="flex items-start gap-6">
+	<div class="flex flex-col gap-6 md:flex-row md:items-start">
 		<!-- Sidebar (list mode only) -->
 		{#if viewMode === 'list'}
 			<CatalogSidebar bind:activeCat={cat} {categories} />
@@ -106,7 +107,8 @@
 
 		<!-- Items -->
 		<div class="flex-1">
-			{#if items.length === 0 && !data.isAuthenticated}
+			{#if items.length === 0 && !data.isAuthenticated} 
+		
 				<div class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center">
 					<div class="mb-4 animate-float text-5xl">🔒</div>
 					<h3 class="mb-2 text-xl font-extrabold">Увійдіть, щоб переглянути каталог</h3>

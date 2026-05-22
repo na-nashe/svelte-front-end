@@ -21,7 +21,7 @@
 	];
 </script>
 
-<div class="sticky top-[76px] w-[200px] shrink-0 animate-slide-r" style="animation-delay: 0.15s">
+<div class="sticky top-[76px] w-full md:w-[200px] md:shrink-0 animate-slide-r" style="animation-delay: 0.15s">
 	<p
 		class="mb-2 px-2 font-[JetBrains_Mono] text-[10px] font-bold tracking-widest text-stone-400 uppercase"
 	>

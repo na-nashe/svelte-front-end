@@ -3,6 +3,7 @@ export interface ApiAlternative {
 	description: string;
 	url: string;
 	country: string;
+	pricing_model: 'free' | 'freemium' | 'paid';
 }
 
 export interface ApiProduct {

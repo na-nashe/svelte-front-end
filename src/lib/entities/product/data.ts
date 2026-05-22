@@ -8,6 +8,7 @@ export interface Alternative {
 	cl: string;
 	pr: 'free' | 'freemium' | 'paid';
 	d: string;
+	url?: string;
 }
 
 export interface Product {
