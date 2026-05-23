@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { replaceState } from '$app/navigation';
 	import type { PageData } from './$types';
 	import type { Product, Alternative } from '$lib/entities/product/data';
 	import type { ApiProduct, ApiAlternative } from '$lib/entities/product/types';
@@ -14,8 +15,16 @@
 	const categories = $derived(data.categories ?? []);
 
 	const PALETTE = [
-		'#3A76F0', '#7360F2', '#25D366', '#EA4335', '#FF6B00',
-		'#6D4AFF', '#00B956', '#E4405F', '#FB542B', '#34D186'
+		'#3A76F0',
+		'#7360F2',
+		'#25D366',
+		'#EA4335',
+		'#FF6B00',
+		'#6D4AFF',
+		'#00B956',
+		'#E4405F',
+		'#FB542B',
+		'#34D186'
 	];
 
 	function colorFromName(name: string): string {
@@ -58,12 +67,47 @@
 
 	const items = $derived((data.products ?? []).map(mapProduct));
 
-	let cat = $state<string | null>(null);
+	let cat = $state<string | null>(data.initialCat ?? null);
+
+	$effect(() => {
+		const url = new URL(window.location.href);
+		if (cat) {
+			url.searchParams.set('cat', cat);
+		} else {
+			url.searchParams.delete('cat');
+		}
+		replaceState(url, {});
+	});
+
+	function catTitlesUnder(title: string): string[] {
+		function collect(nodes: typeof categories): string[] {
+			for (const n of nodes) {
+				if (n.title === title) {
+					const all: string[] = [n.title];
+					function descend(c: typeof n) {
+						for (const ch of c.children ?? []) {
+							all.push(ch.title);
+							descend(ch);
+						}
+					}
+					descend(n);
+					return all;
+				}
+				const found = collect(n.children ?? []);
+				if (found.length) return found;
+			}
+			return [];
+		}
+		return collect(categories);
+	}
+
 	let sort = $state('popular');
 	let viewMode = $state('list');
 	let expandAll = $state(false);
 
-	const filtered = $derived(cat ? items.filter((it) => it.cat === cat) : items);
+	const filtered = $derived(
+		cat ? items.filter((it) => catTitlesUnder(cat!).includes(it.cat)) : items
+	);
 	const sorted = $derived(
 		[...filtered].sort((a, b) => {
 			if (sort === 'alts') return b.alts.length - a.alts.length;
@@ -80,11 +124,11 @@
 </script>
 
 <section class="mx-auto max-w-[1040px] px-6 pb-20">
-	<HeroCatalog categoriesCount={categories.length} />
+	<HeroCatalog categoriesCount={categories.length} {items} />
 
 	<!-- Category pills -->
 	<div class="mb-7">
-		<CategoryPills bind:activeCat={cat} {categories} />
+		<CategoryPills bind:activeCat={cat} {categories} {items} />
 	</div>
 
 	<!-- Toolbar -->
@@ -102,14 +146,15 @@
 	<div class="flex flex-col gap-6 md:flex-row md:items-start">
 		<!-- Sidebar (list mode only) -->
 		{#if viewMode === 'list'}
-			<CatalogSidebar bind:activeCat={cat} {categories} />
+			<CatalogSidebar bind:activeCat={cat} {categories} {items} />
 		{/if}
 
 		<!-- Items -->
 		<div class="flex-1">
-			{#if items.length === 0 && !data.isAuthenticated} 
-		
-				<div class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center">
+			{#if items.length === 0 && !data.isAuthenticated}
+				<div
+					class="animate-scale-in rounded-[28px] border border-stone-200 bg-white p-[72px] text-center"
+				>
 					<div class="mb-4 animate-float text-5xl">🔒</div>
 					<h3 class="mb-2 text-xl font-extrabold">Увійдіть, щоб переглянути каталог</h3>
 					<p class="mx-auto mb-5 max-w-[300px] text-sm text-stone-500">

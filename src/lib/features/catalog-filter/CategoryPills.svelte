@@ -1,23 +1,31 @@
 <script lang="ts">
-	import { ITEMS } from '$lib/entities/product/data';
+	import type { Product } from '$lib/entities/product/data';
 	import type { Category } from '$lib/entities/category';
 
 	let {
 		activeCat = $bindable<string | null>(null),
-		categories = []
+		categories = [],
+		items = [] as Product[]
 	}: {
 		activeCat?: string | null;
 		categories?: Category[];
+		items?: Product[];
 	} = $props();
 
 	let hovCat = $state<string | null>(null);
 
-	function countForCat(title: string): number {
-		return ITEMS.filter((it) => it.cat === title).length;
+	function allTitles(cat: Category): string[] {
+		if (!cat.children?.length) return [cat.title];
+		return [cat.title, ...cat.children.flatMap(allTitles)];
+	}
+
+	function countForCat(cat: Category): number {
+		const titles = allTitles(cat);
+		return items.filter((it) => titles.includes(it.cat)).length;
 	}
 </script>
 
-<div class="flex flex-wrap gap-2 mt-6">
+<div class="mt-6 flex flex-wrap gap-2">
 	<!-- All button -->
 	<button
 		onclick={() => (activeCat = null)}
@@ -31,11 +39,11 @@
 		style={hovCat === 'all' && activeCat ? 'transform: translateY(-1px)' : ''}
 	>
 		<span class="text-base">📦</span>Усі
-		<span class="ml-0.5 font-[JetBrains_Mono] text-[10px] opacity-50">{ITEMS.length}</span>
+		<span class="ml-0.5 font-[JetBrains_Mono] text-[10px] opacity-50">{items.length}</span>
 	</button>
 
 	{#each categories as c, i (c.id)}
-		{@const count = countForCat(c.title)}
+		{@const count = countForCat(c)}
 		{@const active = activeCat === c.title}
 		{@const isHov = hovCat === c.title}
 		{#if count > 0}

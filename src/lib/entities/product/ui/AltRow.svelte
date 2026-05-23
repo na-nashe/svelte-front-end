@@ -31,7 +31,14 @@
 	</div>
 	<div class="min-w-0 flex-1">
 		<div class="mb-0.5 flex flex-wrap items-center gap-1.5">
-			<span class="text-sm font-bold"><a href={alt.url} target="_blank" rel="noopener noreferrer" onclick={(e) => e.stopPropagation()}>{alt.name}</a></span>
+			<span class="text-sm font-bold"
+				><a
+					href={alt.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					onclick={(e) => e.stopPropagation()}>{alt.name}</a
+				></span
+			>
 			<span class="text-[13px]">{alt.c2}</span>
 			<Tag type={alt.pr} />
 		</div>

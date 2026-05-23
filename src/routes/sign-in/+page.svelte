@@ -50,7 +50,9 @@
 
 			<!-- Server error message -->
 			{#if $message}
-				<div class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600">
+				<div
+					class="mb-5 rounded-[11px] border border-red-100 bg-red-50 px-4 py-3 font-[Outfit] text-sm text-red-600"
+				>
 					{$message}
 				</div>
 			{/if}
@@ -100,7 +102,9 @@
 							autocomplete="current-password"
 							aria-invalid={!!$errors.password}
 							class="w-full rounded-[11px] border bg-stone-50 px-4 py-2.5 pr-11 font-[Outfit] text-sm text-stone-900 transition-all duration-150 outline-none placeholder:text-stone-300 focus:bg-white focus:ring-2 focus:ring-[#0057B7]/10
-								{$errors.password ? 'border-red-300 focus:border-red-400' : 'border-stone-200 focus:border-[#0057B7]'}"
+								{$errors.password
+								? 'border-red-300 focus:border-red-400'
+								: 'border-stone-200 focus:border-[#0057B7]'}"
 						/>
 						<button
 							type="button"
@@ -157,9 +161,25 @@
 				>
 					{#if $submitting}
 						<span class="flex items-center justify-center gap-2">
-							<svg class="h-4 w-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+							<svg
+								class="h-4 w-4 animate-spin text-white"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									class="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									stroke-width="4"
+								></circle>
+								<path
+									class="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+								></path>
 							</svg>
 							Вхід...
 						</span>

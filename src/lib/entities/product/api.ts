@@ -11,6 +11,7 @@ export async function fetchProductsByCategory(
 	categoryId: number
 ): Promise<ApiProduct[]> {
 	const res = await fetchFn(`/api/products/${categoryId}`);
-	if (!res.ok) throw new Error(`Failed to fetch products for category ${categoryId}: ${res.status}`);
+	if (!res.ok)
+		throw new Error(`Failed to fetch products for category ${categoryId}: ${res.status}`);
 	return res.json() as Promise<ApiProduct[]>;
 }

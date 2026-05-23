@@ -97,16 +97,13 @@
 			style="animation-delay: 0.25s"
 		>
 			{#each quickCats as c (c.id)}
-				<button
-					onclick={() => {
-						query = c.title;
-						onSearch(c.title);
-					}}
+				<a
+					href="/catalog?cat={encodeURIComponent(c.title)}"
 					class="flex cursor-pointer items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-2 font-[Outfit] text-xs font-semibold text-stone-600 transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
 				>
 					<span>{c.icon}</span>
 					<span>{c.title}</span>
-				</button>
+				</a>
 			{/each}
 		</div>
 	</div>

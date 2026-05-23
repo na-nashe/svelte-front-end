@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { AlternativeSearchItem } from '../types';
+	import type { AlternativeSearchItem, PricingModel } from '../types';
 
 	let {
 		alternatives = [],
@@ -21,11 +21,26 @@
 		return COLORS[Math.abs(hash) % COLORS.length];
 	}
 
+	function hasUrl(url: string | null | undefined): url is string {
+		return !!url && url.trim().length > 0 && url.trim() !== '#';
+	}
+
 	function safeUrl(url: string): string {
-		if (!url) return '#';
 		if (url.startsWith('http://') || url.startsWith('https://')) return url;
 		return `https://${url}`;
 	}
+
+	const TIER_LABEL: Record<PricingModel, string> = {
+		FREE: 'Безкоштовно',
+		PAID: 'Платно',
+		FREEMIUM: 'Freemium'
+	};
+
+	const TIER_STYLE: Record<PricingModel, string> = {
+		FREE: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+		PAID: 'bg-amber-50 text-amber-700 border-amber-200',
+		FREEMIUM: 'bg-sky-50 text-sky-700 border-sky-200'
+	};
 </script>
 
 {#if loading}
@@ -62,15 +77,21 @@
 	<div class="flex flex-col gap-3">
 		{#each alternatives as alt, i (alt.name)}
 			{@const color = colorFor(alt.name)}
-			<a
-				href={safeUrl(alt.url)}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="group flex animate-up items-start gap-4 rounded-2xl border border-stone-200 bg-white p-5 no-underline shadow-[0_2px_12px_#00000006] transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-[0_8px_32px_#00000010]"
+			{@const linked = hasUrl(alt.url)}
+			<svelte:element
+				this={linked ? 'a' : 'div'}
+				href={linked ? safeUrl(alt.url) : undefined}
+				target={linked ? '_blank' : undefined}
+				rel={linked ? 'noopener noreferrer' : undefined}
+				class="group flex animate-up items-start gap-4 rounded-2xl border border-stone-200 bg-white p-5 no-underline shadow-[0_2px_12px_#00000006] {linked
+					? 'transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-[0_8px_32px_#00000010]'
+					: ''}"
 				style="animation-delay: {i * 0.06}s"
 			>
 				<div
-					class="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl font-[Outfit] text-lg font-extrabold transition-transform duration-200 group-hover:scale-105"
+					class="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl font-[Outfit] text-lg font-extrabold transition-transform duration-200 {linked
+						? 'group-hover:scale-105'
+						: ''}"
 					style="background: {color}0d; color: {color}; border: 1.5px solid {color}20"
 				>
 					{alt.name.charAt(0).toUpperCase()}
@@ -85,25 +106,54 @@
 								{alt.country}
 							</span>
 						{/if}
+						{#if alt.pricingModel && TIER_LABEL[alt.pricingModel]}
+							<span
+								class="rounded-full border px-2 py-0.5 font-[JetBrains_Mono] text-[10px] font-bold uppercase {TIER_STYLE[
+									alt.pricingModel
+								]}"
+							>
+								{TIER_LABEL[alt.pricingModel]}
+							</span>
+						{/if}
 					</div>
 					{#if alt.description}
 						<p class="text-xs text-stone-500">{alt.description}</p>
 					{/if}
+					{#if !linked}
+						<p class="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-stone-400">
+							<svg
+								width="12"
+								height="12"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								aria-hidden="true"
+							>
+								<circle cx="12" cy="12" r="10" />
+								<line x1="12" y1="8" x2="12" y2="12" />
+								<line x1="12" y1="16" x2="12.01" y2="16" />
+							</svg>
+							Сайт недоступний
+						</p>
+					{/if}
 				</div>
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					class="mt-0.5 flex-shrink-0 text-stone-300 transition-colors duration-150 group-hover:text-stone-500"
-				>
-					<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-					<polyline points="15 3 21 3 21 9" />
-					<line x1="10" y1="14" x2="21" y2="3" />
-				</svg>
-			</a>
+				{#if linked}
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						class="mt-0.5 flex-shrink-0 text-stone-300 transition-colors duration-150 group-hover:text-stone-500"
+					>
+						<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+						<polyline points="15 3 21 3 21 9" />
+						<line x1="10" y1="14" x2="21" y2="3" />
+					</svg>
+				{/if}
+			</svelte:element>
 		{/each}
 	</div>
 {/if}
