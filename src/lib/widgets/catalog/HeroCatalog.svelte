@@ -1,21 +1,32 @@
 <script lang="ts">
-	import { ITEMS } from '$lib/entities/product/data';
+	import type { Product } from '$lib/entities/product/data';
 
-	let { categoriesCount = 0 }: { categoriesCount?: number } = $props();
+	let {
+		categoriesCount = 0,
+		items = [] as Product[]
+	}: {
+		categoriesCount?: number;
+		items?: Product[];
+	} = $props();
 
-	const totalProducts = ITEMS.length;
-	const totalAlts = ITEMS.reduce((s, it) => s + it.alts.length, 0);
-	const totalCats = categoriesCount;
+	const totalProducts = $derived(items.length);
+	const totalAlts = $derived(items.reduce((s, it) => s + it.alts.length, 0));
 
-	const topAlts = ITEMS.flatMap((it) => it.alts.map((a) => ({ ...a, from: it.orig, ff: it.flag })))
-		.sort((a, b) => b.ratio - a.ratio)
-		.slice(0, 5);
-
-	const stats = [
+	const stats = $derived([
 		{ value: totalProducts, label: 'продуктів', icon: '📦' },
 		{ value: totalAlts, label: 'альтернатив', icon: '🔄' },
-		{ value: totalCats, label: 'категорій', icon: '📂' }
-	];
+		{ value: categoriesCount, label: 'категорій', icon: '📂' }
+	]);
+
+	const topAlts = $derived(
+		items.flatMap((it) => it.alts.map((a) => ({ ...a, from: it.orig, ff: it.flag }))).slice(0, 5)
+	);
+
+	const prLabel: Record<string, string> = {
+		free: 'Безкоштовно',
+		freemium: 'Freemium',
+		paid: 'Платно'
+	};
 </script>
 
 <section
@@ -90,44 +101,48 @@
 		</div>
 
 		<!-- Bottom: Top alternatives strip -->
-		<div
-			class="animate-up rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
-			style="animation-delay: 0.3s"
-		>
-			<div class="mb-3 flex items-center gap-2">
-				<span class="text-sm">🏆</span>
-				<span class="font-[Outfit] text-xs font-semibold tracking-wide text-stone-400 uppercase"
-					>Найкращі альтернативи</span
-				>
-			</div>
-
-			<div class="grid gap-3 sm:grid-cols-5">
-				{#each topAlts as alt (alt.name)}
-					<div
-						class="flex items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-3 py-2.5 transition-all duration-200 hover:bg-white/10"
+		{#if topAlts.length > 0}
+			<div
+				class="animate-up rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
+				style="animation-delay: 0.3s"
+			>
+				<div class="mb-3 flex items-center gap-2">
+					<span class="text-sm">🔄</span>
+					<span class="font-[Outfit] text-xs font-semibold tracking-wide text-stone-400 uppercase"
+						>Альтернативи</span
 					>
+				</div>
+
+				<div class="grid gap-3 sm:grid-cols-5">
+					{#each topAlts as alt (alt.name)}
 						<div
-							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-[Outfit] text-xs font-bold text-white"
-							style="background-color: {alt.cl}"
+							class="flex items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-3 py-2.5 transition-all duration-200 hover:bg-white/10"
 						>
-							{alt.L}
-						</div>
-						<div class="min-w-0 flex-1">
-							<div class="flex items-center gap-1">
-								<span class="truncate font-[Outfit] text-sm font-semibold text-white"
-									>{alt.name}</span
-								>
-								<span class="text-xs">{alt.c2}</span>
+							<div
+								class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-[Outfit] text-xs font-bold text-white"
+								style="background-color: {alt.cl}"
+							>
+								{alt.L}
 							</div>
-							<div class="truncate font-[Outfit] text-[10px] text-stone-500">
-								замість {alt.from}
-								{alt.ff}
+							<div class="min-w-0 flex-1">
+								<div class="flex items-center gap-1">
+									<span class="truncate font-[Outfit] text-sm font-semibold text-white"
+										>{alt.name}</span
+									>
+									<span class="text-xs text-white">{alt.c2}</span>
+								</div>
+								<div class="truncate font-[Outfit] text-[10px] text-white">
+									замість {alt.from}
+									{alt.ff}
+								</div>
 							</div>
+							<span class="font-[JetBrains_Mono] text-[9px] font-bold text-green-400"
+								>{prLabel[alt.pr] ?? alt.pr}</span
+							>
 						</div>
-						<span class="font-[JetBrains_Mono] text-xs font-bold text-green-400">{alt.ratio}%</span>
-					</div>
-				{/each}
+					{/each}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </section>

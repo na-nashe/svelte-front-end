@@ -7,7 +7,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			token: string | null;
-    		isAuthenticated: boolean;
+			isAuthenticated: boolean;
 		}
 		interface PageData {
 			categories?: Category[];

@@ -49,7 +49,7 @@
 			>
 				Н
 			</div>
-			<span class="text-lg font-extrabold tracking-tight hidden sm:inline">НаНаше</span>
+			<span class="hidden text-lg font-extrabold tracking-tight sm:inline">НаНаше</span>
 		</a>
 
 		<!-- Nav tabs -->
@@ -57,7 +57,7 @@
 			{@const active = isActive(t.path)}
 			<a
 				href="{base}{t.path}"
-				class="cursor-pointer rounded-lg border-b-[2.5px] border-none px-2 py-1 text-[11px] sm:px-3.5 sm:py-1.5 sm:text-[13px] font-[Outfit] no-underline transition-all duration-150
+				class="cursor-pointer rounded-lg border-b-[2.5px] border-none px-2 py-1 font-[Outfit] text-[11px] no-underline transition-all duration-150 sm:px-3.5 sm:py-1.5 sm:text-[13px]
 					{active
 					? 'border-b-[#0057B7] bg-stone-900/[0.03] font-bold text-stone-900'
 					: 'border-b-transparent bg-transparent font-medium text-stone-400 hover:text-stone-600'}"
@@ -73,7 +73,7 @@
 
 		<!-- Compact search -->
 		{#if showSearch}
-			<div class="w-32 min-w-0 hidden sm:block sm:w-60">
+			<div class="hidden w-32 min-w-0 sm:block sm:w-60">
 				<SearchBar bind:query onGo={handleSearch} />
 			</div>
 		{/if}
@@ -95,13 +95,13 @@
 		{:else}
 			<a
 				href={resolve('/sign-in')}
-				class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-[10px] border-2 border-[#0057B7] sm:px-3 px-2 py-1 font-[Outfit] text-[11px] sm:text-[13px] font-bold text-[#0057B7] no-underline transition-all duration-200"
+				class="ml-2.5 flex cursor-pointer items-center gap-1.5 rounded-[10px] border-2 border-[#0057B7] px-2 py-1 font-[Outfit] text-[11px] font-bold text-[#0057B7] no-underline transition-all duration-200 sm:px-3 sm:text-[13px]"
 			>
 				Увійти
 			</a>
 			<a
 				href={resolve('/sign-up')}
-				class="rounded-[10px] bg-[#0057B7] sm:px-3.5 px-2 py-1.5 sm:py-1.5 font-[Outfit] text-[11px] sm:text-[13] font-bold text-white no-underline shadow-[0_2px_8px_#0057B730] transition-all duration-150 hover:bg-[#0049a3]"
+				class="rounded-[10px] bg-[#0057B7] px-2 py-1.5 font-[Outfit] text-[11px] font-bold text-white no-underline shadow-[0_2px_8px_#0057B730] transition-all duration-150 hover:bg-[#0049a3] sm:px-3.5 sm:py-1.5 sm:text-[13]"
 			>
 				Реєстрація
 			</a>
