@@ -27,22 +27,8 @@
 
 <div class="mt-6 flex flex-wrap gap-2">
 	<!-- All button -->
-	<button
-		onclick={() => (activeCat = null)}
-		onmouseenter={() => (hovCat = 'all')}
-		onmouseleave={() => (hovCat = null)}
-		class="flex cursor-pointer items-center gap-2 rounded-[14px] px-[18px] py-2.5 pl-3 font-[Outfit] text-[13px] transition-all duration-[250ms]
-			{!activeCat
-			? 'border-[1.5px] border-stone-900 bg-stone-900 font-bold text-white'
-			: 'border-[1.5px] border-stone-200 bg-white font-semibold text-stone-600'}
-			animate-scale-in"
-		style={hovCat === 'all' && activeCat ? 'transform: translateY(-1px)' : ''}
-	>
-		<span class="text-base">📦</span>Усі
-		<span class="ml-0.5 font-[JetBrains_Mono] text-[10px] opacity-50">{items.length}</span>
-	</button>
 
-	{#each categories as c, i (c.id)}
+	<!-- {#each categories as c, i (c.id)}
 		{@const count = countForCat(c)}
 		{@const active = activeCat === c.title}
 		{@const isHov = hovCat === c.title}
@@ -73,5 +59,5 @@
 				</span>
 			</button>
 		{/if}
-	{/each}
+	{/each} -->
 </div>

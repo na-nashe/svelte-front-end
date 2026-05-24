@@ -1,4 +1,5 @@
 export interface Alternative {
+	id?: number;
 	name: string;
 	c2: string;
 	ratio: number;
@@ -12,6 +13,7 @@ export interface Alternative {
 }
 
 export interface Product {
+	id?: number;
 	orig: string;
 	flag: string;
 	kw: string[];

@@ -20,7 +20,7 @@
 	const hasAlternatives = !!alternativesTotal;
 </script>
 
-<section class="relative overflow-hidden bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-24">
+<section class="relative bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-5">
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
@@ -71,11 +71,18 @@
 		>
 			Заміни
 			<span
-				class="bg-gradient-to-r from-[#0057B7] via-[#2563eb] to-[#7c3aed] bg-clip-text text-transparent"
+				class="bg-clip-text text-transparent"
+				style="background-image: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c, #dc2626); background-size: 300% auto; animation: grad 5s ease infinite"
 			>
 				ворожe
 			</span>
-			на наше
+			на
+			<span
+				class="bg-clip-text text-7xl text-transparent"
+				style="background-image: linear-gradient(90deg, #0057B7, #2f7df0, #d9a400, #c98a00, #d9a400, #2f7df0, #0057B7); background-size: 300% auto; animation: grad 35s ease infinite"
+			>
+				наше
+			</span>
 		</h1>
 
 		<!-- Subtitle -->
@@ -87,15 +94,12 @@
 		</p>
 
 		<!-- Search Bar -->
-		<div class="relative z-[1000] mx-auto mb-8 max-w-xl animate-up" style="animation-delay: 0.2s">
+		<div class="relative z-[1000]! mx-auto mb-3 max-w-xl animate-up" style="animation-delay: 0.2s">
 			<SearchBar bind:query big onGo={onSearch} />
 		</div>
 
 		<!-- Quick categories -->
-		<div
-			class="mb-10 flex animate-up flex-wrap justify-center gap-2"
-			style="animation-delay: 0.25s"
-		>
+		<div class="flex animate-up flex-wrap justify-center gap-2" style="animation-delay: 0.25s">
 			{#each quickCats as c (c.id)}
 				<a
 					href="/catalog?cat={encodeURIComponent(c.title)}"

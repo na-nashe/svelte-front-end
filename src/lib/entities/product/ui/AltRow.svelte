@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Ratio from '$lib/shared/ui/Ratio.svelte';
 	import Tag from '$lib/shared/ui/Tag.svelte';
+	import AltLogo from './AltLogo.svelte';
 	import type { Alternative } from '../data';
 
 	let {
@@ -21,13 +21,8 @@
 	onmouseleave={() => (hovered = false)}
 	onclick={() => onclick?.(alt)}
 >
-	<div
-		class="grid h-11 w-11 shrink-0 place-items-center rounded-xl font-[Outfit] text-base font-extrabold transition-transform duration-200"
-		style="background: {alt.cl}0a; color: {alt.cl}; border: 1.5px solid {alt.cl}14; transform: {hovered
-			? 'scale(1.08)'
-			: 'none'}"
-	>
-		{alt.L}
+	<div style="transform: {hovered ? 'scale(1.08)' : 'none'}; transition: transform 0.2s">
+		<AltLogo url={alt.url} letter={alt.L} color={alt.cl} size={44} />
 	</div>
 	<div class="min-w-0 flex-1">
 		<div class="mb-0.5 flex flex-wrap items-center gap-1.5">
@@ -45,12 +40,11 @@
 		<div class="text-xs text-stone-500">{alt.d}</div>
 	</div>
 	<div class="shrink-0 text-right">
-		<Ratio value={alt.ratio} />
-		<div
-			class="mt-0.5 text-[9px] text-stone-400 transition-opacity duration-200"
-			style="opacity: {hovered ? 1 : 0}"
-		>
-			рекомендують
-		</div>
+		{#if alt.rev > 0}
+			<span class="text-[13px] font-bold text-amber-500">★ {alt.r.toFixed(1)}</span>
+			<div class="mt-0.5 text-[9px] text-stone-400">{alt.rev} відгук{alt.rev === 1 ? '' : alt.rev < 5 ? 'и' : 'ів'}</div>
+		{:else}
+			<span class="text-[11px] text-stone-300 italic">немає відгуків</span>
+		{/if}
 	</div>
 </button>

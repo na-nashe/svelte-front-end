@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Tag from '$lib/shared/ui/Tag.svelte';
+	import AltLogo from './AltLogo.svelte';
 	import type { Product, Alternative } from '../data';
 
 	let {
@@ -69,12 +70,7 @@
 					onmouseenter={(e) => (e.currentTarget.style.borderColor = a.cl + '20')}
 					onmouseleave={(e) => (e.currentTarget.style.borderColor = 'transparent')}
 				>
-					<div
-						class="grid h-8 w-8 place-items-center rounded-[8px] font-[Outfit] text-[11px] font-extrabold"
-						style="background: {a.cl}12; color: {a.cl}"
-					>
-						{a.L}
-					</div>
+					<AltLogo url={a.url} letter={a.L} color={a.cl} size={32} />
 					<div class="min-w-0">
 						<div class="flex flex-wrap items-center gap-1 leading-tight">
 							<span class="text-xs font-semibold">{a.name}</span>
@@ -84,7 +80,12 @@
 							<div class="truncate text-[10px] text-stone-400">{a.d}</div>
 						{/if}
 					</div>
-					<Tag type={a.pr} />
+					<div class="flex flex-col items-end gap-0.5">
+						<Tag type={a.pr} />
+						{#if a.rev > 0}
+							<span class="text-[10px] font-bold text-amber-500">★ {a.r.toFixed(1)}</span>
+						{/if}
+					</div>
 				</button>
 			{/each}
 		</div>
@@ -96,14 +97,11 @@
 			{#each item.alts.slice(0, 5) as a, j (j)}
 				<button
 					onclick={() => onAltClick?.(a)}
-					class="grid h-6 w-6 cursor-pointer place-items-center rounded-[6px] text-[9px] font-extrabold transition-all duration-200 hover:scale-110"
-					style="background: {a.cl}0c; color: {a.cl}; border: 1.5px solid {a.cl}20; margin-left: {j >
-					0
-						? '-4px'
-						: '0'}; z-index: {item.alts.length - j}"
+					class="cursor-pointer transition-all duration-200 hover:scale-110"
+					style="margin-left: {j > 0 ? '-4px' : '0'}; z-index: {item.alts.length - j}"
 					title={a.name}
 				>
-					{a.L}
+					<AltLogo url={a.url} letter={a.L} color={a.cl} size={24} />
 				</button>
 			{/each}
 			{#if hidden > 0}

@@ -32,3 +32,8 @@ storybook-static
 
 .claude
 .cursor
+
+# drizzle-kit pull output (generated; only schema.ts is committed)
+src/lib/db/relations.ts
+src/lib/db/meta/
+src/lib/db/*.sql

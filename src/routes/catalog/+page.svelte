@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { replaceState } from '$app/navigation';
+	import { replaceState, goto } from '$app/navigation';
 	import type { PageData } from './$types';
 	import type { Product, Alternative } from '$lib/entities/product/data';
 	import type { ApiProduct, ApiAlternative } from '$lib/entities/product/types';
@@ -42,11 +42,12 @@
 
 	function mapAlternative(a: ApiAlternative): Alternative {
 		return {
+			id: a.id,
 			name: a.name,
 			c2: a.country,
 			ratio: 0,
-			r: 0,
-			rev: 0,
+			r: a.avg_rating ?? 0,
+			rev: a.review_count ?? 0,
 			L: initialsFromName(a.name),
 			cl: colorFromName(a.name),
 			pr: a.pricing_model,
@@ -57,6 +58,7 @@
 
 	function mapProduct(p: ApiProduct): Product {
 		return {
+			id: p.id,
 			orig: p.name,
 			flag: p.origin,
 			kw: p.aliases,
@@ -119,7 +121,7 @@
 	const activeCatObj = $derived(cat ? categories.find((c) => c.title === cat) : null);
 
 	function handleAltClick(a: Alternative) {
-		console.log('Alt clicked:', a.name);
+		if (a.id) goto(`/reviews/${a.id}`);
 	}
 </script>
 
@@ -185,7 +187,7 @@
 			{:else if viewMode === 'list'}
 				<div class="flex flex-col gap-3">
 					{#each sorted as it, i (it.orig)}
-						<ItemBlock item={it} index={i} openDefault={expandAll} onAltClick={handleAltClick} />
+						<ItemBlock item={it} index={i} openDefault={expandAll} onAltClick={handleAltClick} isAuthenticated={data.isAuthenticated} />
 					{/each}
 				</div>
 			{:else}
