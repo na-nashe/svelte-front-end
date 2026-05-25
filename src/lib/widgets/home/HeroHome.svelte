@@ -70,11 +70,24 @@
 			style="animation-delay: 0.1s"
 		>
 			Заміни
-			<span
-				class="bg-clip-text text-transparent"
-				style="background-image: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c, #dc2626); background-size: 300% auto; animation: grad 5s ease infinite"
-			>
+			<span class="relative inline-block text-stone-900">
 				ворожe
+				<svg
+					aria-hidden="true"
+					class="absolute left-0 w-full overflow-visible"
+					style="bottom: -7px; height: 12px"
+					viewBox="0 0 200 12"
+					preserveAspectRatio="none"
+				>
+					<path
+						d="M0 8 Q25 2 50 8 Q75 14 100 8 Q125 2 150 8 Q175 14 200 8"
+						stroke="#dc2626"
+						stroke-width="4"
+						fill="none"
+						stroke-linecap="round"
+						class="wave-underline"
+					/>
+				</svg>
 			</span>
 			на
 			<span
@@ -112,3 +125,33 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.wave-underline {
+		stroke-dasharray: 240;
+		stroke-dashoffset: 240;
+		animation:
+			draw-wave 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards,
+			pulse-wave 2.2s ease-in-out 1.4s infinite;
+	}
+
+	@keyframes draw-wave {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@keyframes pulse-wave {
+		0%,
+		100% {
+			stroke: #dc2626;
+			stroke-width: 4;
+			opacity: 1;
+		}
+		50% {
+			stroke: #ef4444;
+			stroke-width: 5.5;
+			opacity: 0.75;
+		}
+	}
+</style>
