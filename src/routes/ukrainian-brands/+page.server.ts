@@ -42,7 +42,11 @@ function isUkrainian(country: string): boolean {
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.token) {
-		return { catalogBrands: [] as CatalogBrand[], isAuthenticated: false, spotlightBrands: SPOTLIGHT_BRANDS };
+		return {
+			catalogBrands: [] as CatalogBrand[],
+			isAuthenticated: false,
+			spotlightBrands: SPOTLIGHT_BRANDS
+		};
 	}
 
 	let products: ApiProduct[] = [];

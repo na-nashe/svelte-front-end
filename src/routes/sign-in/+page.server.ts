@@ -43,6 +43,19 @@ export const actions = {
 			maxAge: 60 * 15
 		});
 
+		const setCookieHeader = response.headers.get('set-cookie');
+		const refreshTokenMatch = setCookieHeader?.match(/refresh_token=([^;]+)/);
+		const refreshToken = refreshTokenMatch?.[1];
+		if (refreshToken) {
+			cookies.set('refresh_token', refreshToken, {
+				httpOnly: true,
+				secure: true,
+				sameSite: 'strict',
+				path: '/',
+				maxAge: 60 * 60 * 24 * 30
+			});
+		}
+
 		redirect(303, '/');
 	}
 };

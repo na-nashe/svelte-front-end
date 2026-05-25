@@ -1,6 +1,13 @@
 import { error } from '@sveltejs/kit';
 import { db } from '$lib/db';
-import { reviews, users, alternatives, countries, reviewSummaries, reviewVotes } from '$lib/db/schema';
+import {
+	reviews,
+	users,
+	alternatives,
+	countries,
+	reviewSummaries,
+	reviewVotes
+} from '$lib/db/schema';
 import { eq, desc, inArray, and, sql } from 'drizzle-orm';
 import { decodeJwtSub } from '$lib/server/jwt';
 import type { PageServerLoad } from './$types';
@@ -75,10 +82,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 					.select({ reviewId: reviewVotes.reviewId, value: reviewVotes.value })
 					.from(reviewVotes)
 					.where(
-						and(
-							eq(reviewVotes.userId, currentUserId),
-							inArray(reviewVotes.reviewId, reviewIds)
-						)
+						and(eq(reviewVotes.userId, currentUserId), inArray(reviewVotes.reviewId, reviewIds))
 					)
 			: Promise.resolve([])
 	]);

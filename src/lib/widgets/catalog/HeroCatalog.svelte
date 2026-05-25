@@ -70,7 +70,9 @@
 						></span>
 						<span class="relative inline-flex h-2 w-2 rounded-full bg-[#FFD700]"></span>
 					</span>
-					<span class="font-[JetBrains_Mono] text-[10px] font-medium tracking-wider text-[#FFD700]/90 uppercase">
+					<span
+						class="font-[JetBrains_Mono] text-[10px] font-medium tracking-wider text-[#FFD700]/90 uppercase"
+					>
 						Слава Україні
 					</span>
 				</div>
@@ -105,8 +107,12 @@
 						<span
 							class="stat-glow pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
 						></span>
-						<span class="relative mb-1 text-2xl transition-transform duration-500 ease-out group-hover:scale-110">{stat.icon}</span>
-						<span class="relative font-[Outfit] text-3xl font-extrabold text-white transition-colors duration-300 group-hover:text-[#FFD700]"
+						<span
+							class="relative mb-1 text-2xl transition-transform duration-500 ease-out group-hover:scale-110"
+							>{stat.icon}</span
+						>
+						<span
+							class="relative font-[Outfit] text-3xl font-extrabold text-white transition-colors duration-300 group-hover:text-[#FFD700]"
 							>{stat.value}</span
 						>
 						<span class="relative font-[Outfit] text-xs text-stone-400">{stat.label}</span>
@@ -123,7 +129,8 @@
 			>
 				<div class="mb-3 flex items-center gap-2">
 					<span class="text-sm">🔄</span>
-					<span class="font-[Outfit] text-xs font-semibold tracking-wide text-[#FFD700]/80 uppercase"
+					<span
+						class="font-[Outfit] text-xs font-semibold tracking-wide text-[#FFD700]/80 uppercase"
 						>Альтернативи</span
 					>
 				</div>
@@ -134,7 +141,9 @@
 							class="alt-row group relative flex items-center gap-3 overflow-hidden rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2.5 transition-all duration-300 ease-out hover:translate-x-1 hover:border-[#FFD700]/25 hover:bg-white/[0.08]"
 							style="animation: up 0.4s ease both; animation-delay: {0.35 + i * 0.05}s"
 						>
-							<span class="alt-accent absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 transition-transform duration-300 ease-out group-hover:scale-y-100"></span>
+							<span
+								class="alt-accent absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 transition-transform duration-300 ease-out group-hover:scale-y-100"
+							></span>
 							<div
 								class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-[Outfit] text-xs font-bold text-white shadow-lg transition-transform duration-300 ease-out group-hover:scale-105"
 								style="background-color: {alt.cl}"
@@ -143,7 +152,8 @@
 							</div>
 							<div class="relative min-w-0 flex-1">
 								<div class="flex items-center gap-1">
-									<span class="truncate font-[Outfit] text-sm font-semibold text-white transition-colors duration-300 group-hover:text-[#FFD700]"
+									<span
+										class="truncate font-[Outfit] text-sm font-semibold text-white transition-colors duration-300 group-hover:text-[#FFD700]"
 										>{alt.name}</span
 									>
 									<span class="text-xs text-white">{alt.c2}</span>
@@ -226,11 +236,7 @@
 	}
 
 	.stat-glow {
-		background: radial-gradient(
-			circle at 50% 0%,
-			rgba(255, 215, 0, 0.18),
-			transparent 70%
-		);
+		background: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.18), transparent 70%);
 	}
 
 	.alt-accent {

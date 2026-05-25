@@ -21,10 +21,16 @@
 
 	const summary = $derived(data.summary as { text: string; updatedAt: string } | null);
 
-	const alt = $derived(data.alternative as {
-		id: number; name: string; description: string;
-		url: string; country: string; pricing_model: string;
-	});
+	const alt = $derived(
+		data.alternative as {
+			id: number;
+			name: string;
+			description: string;
+			url: string;
+			country: string;
+			pricing_model: string;
+		}
+	);
 
 	const myReviewId = $derived(data.myReviewId as number | null);
 
@@ -50,7 +56,9 @@
 	let alreadyReviewed = $state(false);
 
 	const prLabel: Record<string, string> = {
-		free: 'Безкоштовно', freemium: 'Freemium', paid: 'Платно'
+		free: 'Безкоштовно',
+		freemium: 'Freemium',
+		paid: 'Платно'
 	};
 	const prClass: Record<string, string> = {
 		free: 'bg-green-100 text-green-800',
@@ -59,11 +67,15 @@
 	};
 
 	function stars(n: number, filled: number): string[] {
-		return Array.from({ length: 5 }, (_, i) => i < filled ? '★' : '☆');
+		return Array.from({ length: 5 }, (_, i) => (i < filled ? '★' : '☆'));
 	}
 
 	function formatDate(ts: string): string {
-		return new Date(ts).toLocaleDateString('uk-UA', { year: 'numeric', month: 'long', day: 'numeric' });
+		return new Date(ts).toLocaleDateString('uk-UA', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		});
 	}
 
 	function initials(name: string): string {
@@ -72,11 +84,17 @@
 
 	function addPro() {
 		const t = newPro.trim();
-		if (t) { pros = [...pros, t]; newPro = ''; }
+		if (t) {
+			pros = [...pros, t];
+			newPro = '';
+		}
 	}
 	function addCon() {
 		const t = newCon.trim();
-		if (t) { cons = [...cons, t]; newCon = ''; }
+		if (t) {
+			cons = [...cons, t];
+			newCon = '';
+		}
 	}
 
 	// Edit state
@@ -140,18 +158,30 @@
 	}
 
 	async function saveEdit(reviewId: number) {
-		if (!editRating) { editError = 'Оберіть рейтинг'; return; }
+		if (!editRating) {
+			editError = 'Оберіть рейтинг';
+			return;
+		}
 		editSaving = true;
 		editError = null;
 		try {
 			const res = await fetch(`/api/reviews/${alt.id}/${reviewId}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ rating: editRating, title: editTitle || null, content: editContent || null, pros: editPros, cons: editCons })
+				body: JSON.stringify({
+					rating: editRating,
+					title: editTitle || null,
+					content: editContent || null,
+					pros: editPros,
+					cons: editCons
+				})
 			});
 			const body = await res.json();
-			if (!res.ok) { editError = body.message ?? 'Помилка збереження'; return; }
-			reviews = reviews.map((r) => r.id === reviewId ? { ...r, ...body } : r);
+			if (!res.ok) {
+				editError = body.message ?? 'Помилка збереження';
+				return;
+			}
+			reviews = reviews.map((r) => (r.id === reviewId ? { ...r, ...body } : r));
 			editingId = null;
 		} catch {
 			editError = 'Помилка мережі';
@@ -174,7 +204,10 @@
 	}
 
 	async function submit() {
-		if (!rating) { submitError = 'Оберіть рейтинг'; return; }
+		if (!rating) {
+			submitError = 'Оберіть рейтинг';
+			return;
+		}
 		submitting = true;
 		submitError = null;
 		try {
@@ -190,7 +223,11 @@
 				return;
 			}
 			reviews = [{ ...body, likes: 0, dislikes: 0, myVote: 0 }, ...reviews];
-			rating = 0; title = ''; content = ''; pros = []; cons = [];
+			rating = 0;
+			title = '';
+			content = '';
+			pros = [];
+			cons = [];
 		} catch {
 			submitError = 'Помилка мережі';
 		} finally {
@@ -200,20 +237,24 @@
 </script>
 
 <div class="mx-auto max-w-[760px] px-6 py-10">
-
 	<!-- Back -->
 	<a
 		href="/catalog"
 		class="mb-8 inline-flex items-center gap-1.5 font-[Outfit] text-sm text-stone-400 transition-colors hover:text-stone-700"
 	>
 		<svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-			<path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+			<path
+				d="M12.5 15L7.5 10L12.5 5"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+			/>
 		</svg>
 		Назад до каталогу
 	</a>
 
 	<!-- Alternative card -->
-	<div class="animate-up mb-8 overflow-hidden rounded-3xl border border-stone-200 bg-white">
+	<div class="mb-8 animate-up overflow-hidden rounded-3xl border border-stone-200 bg-white">
 		<div class="h-[3px]" style="background: linear-gradient(90deg, #0057B7, #7c3aed)"></div>
 		<div class="p-6">
 			<div class="flex items-start gap-4">
@@ -237,7 +278,11 @@
 						<h1 class="text-xl font-extrabold">{alt.name}</h1>
 						<span class="text-base">{alt.country}</span>
 						{#if alt.pricing_model}
-							<span class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase {prClass[alt.pricing_model] ?? 'bg-stone-100 text-stone-600'}">
+							<span
+								class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase {prClass[
+									alt.pricing_model
+								] ?? 'bg-stone-100 text-stone-600'}"
+							>
 								{prLabel[alt.pricing_model] ?? alt.pricing_model}
 							</span>
 						{/if}
@@ -246,7 +291,7 @@
 						<p class="mb-3 text-sm text-stone-500">{alt.description}</p>
 					{/if}
 					<div class="flex items-center gap-3">
-						<div class="flex text-amber-400 text-lg">
+						<div class="flex text-lg text-amber-400">
 							{#each stars(5, Math.round(avgRating)) as s}
 								<span>{s}</span>
 							{/each}
@@ -254,7 +299,13 @@
 						<span class="font-[JetBrains_Mono] text-sm font-bold text-stone-700">
 							{avgRating > 0 ? avgRating.toFixed(1) : '—'}
 						</span>
-						<span class="text-xs text-stone-400">{reviews.length} відгук{reviews.length === 1 ? '' : reviews.length < 5 ? 'и' : 'ів'}</span>
+						<span class="text-xs text-stone-400"
+							>{reviews.length} відгук{reviews.length === 1
+								? ''
+								: reviews.length < 5
+									? 'и'
+									: 'ів'}</span
+						>
 						{#if alt.url}
 							<a
 								href={alt.url}
@@ -273,12 +324,18 @@
 
 	<!-- AI Summary -->
 	{#if summary}
-		<div class="animate-up mb-8 rounded-3xl border border-stone-200 bg-white p-6" style="animation-delay: 0.08s">
+		<div
+			class="mb-8 animate-up rounded-3xl border border-stone-200 bg-white p-6"
+			style="animation-delay: 0.08s"
+		>
 			<div class="mb-3 flex items-center gap-2">
 				<span class="text-base">✦</span>
 				<h2 class="font-[Outfit] text-sm font-extrabold text-stone-700">Підсумок відгуків</h2>
 				<span class="ml-auto text-[10px] text-stone-300">
-					оновлено {new Date(summary.updatedAt).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}
+					оновлено {new Date(summary.updatedAt).toLocaleDateString('uk-UA', {
+						day: 'numeric',
+						month: 'long'
+					})}
 				</span>
 			</div>
 			<p class="text-sm leading-relaxed text-stone-600">{summary.text}</p>
@@ -287,48 +344,62 @@
 
 	<!-- Write review -->
 	{#if data.isAuthenticated && !alreadyReviewed}
-		<div class="animate-up mb-8 rounded-3xl border border-stone-200 bg-white p-6" style="animation-delay: 0.1s">
+		<div
+			class="mb-8 animate-up rounded-3xl border border-stone-200 bg-white p-6"
+			style="animation-delay: 0.1s"
+		>
 			<h2 class="mb-5 font-[Outfit] text-base font-extrabold">Написати відгук</h2>
 
 			<!-- Star picker -->
 			<div class="mb-5">
-				<p class="mb-2 text-xs font-semibold text-stone-500">Рейтинг <span class="text-red-500">*</span></p>
+				<p class="mb-2 text-xs font-semibold text-stone-500">
+					Рейтинг <span class="text-red-500">*</span>
+				</p>
 				<div class="flex gap-1">
 					{#each [1, 2, 3, 4, 5] as n}
 						<button
 							onmouseenter={() => (hovStar = n)}
 							onmouseleave={() => (hovStar = 0)}
 							onclick={() => (rating = n)}
-							class="cursor-pointer text-3xl transition-transform duration-100 hover:scale-110 {(hovStar || rating) >= n ? 'text-amber-400' : 'text-stone-200'}"
-						>★</button>
+							class="cursor-pointer text-3xl transition-transform duration-100 hover:scale-110 {(hovStar ||
+								rating) >= n
+								? 'text-amber-400'
+								: 'text-stone-200'}">★</button
+						>
 					{/each}
 					{#if rating}
-						<span class="ml-2 self-center font-[Outfit] text-sm font-semibold text-stone-500">{rating}/5</span>
+						<span class="ml-2 self-center font-[Outfit] text-sm font-semibold text-stone-500"
+							>{rating}/5</span
+						>
 					{/if}
 				</div>
 			</div>
 
 			<!-- Title -->
 			<div class="mb-4">
-				<label class="mb-1.5 block text-xs font-semibold text-stone-500" for="rev-title">Заголовок</label>
+				<label class="mb-1.5 block text-xs font-semibold text-stone-500" for="rev-title"
+					>Заголовок</label
+				>
 				<input
 					id="rev-title"
 					bind:value={title}
 					placeholder="Коротко про враження..."
 					maxlength="200"
-					class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+					class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 				/>
 			</div>
 
 			<!-- Content -->
 			<div class="mb-4">
-				<label class="mb-1.5 block text-xs font-semibold text-stone-500" for="rev-content">Відгук</label>
+				<label class="mb-1.5 block text-xs font-semibold text-stone-500" for="rev-content"
+					>Відгук</label
+				>
 				<textarea
 					id="rev-content"
 					bind:value={content}
 					placeholder="Детальніше про досвід використання..."
 					rows="4"
-					class="w-full resize-none rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+					class="w-full resize-none rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 				></textarea>
 			</div>
 
@@ -338,9 +409,14 @@
 					<p class="mb-2 text-xs font-semibold text-stone-500">Переваги</p>
 					<div class="mb-2 flex flex-wrap gap-1.5">
 						{#each pros as pro, i}
-							<span class="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-semibold text-green-700">
+							<span
+								class="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-semibold text-green-700"
+							>
 								+ {pro}
-								<button onclick={() => (pros = pros.filter((_, j) => j !== i))} class="cursor-pointer text-green-400 hover:text-green-700">×</button>
+								<button
+									onclick={() => (pros = pros.filter((_, j) => j !== i))}
+									class="cursor-pointer text-green-400 hover:text-green-700">×</button
+								>
 							</span>
 						{/each}
 					</div>
@@ -354,16 +430,22 @@
 						<button
 							onclick={addPro}
 							class="cursor-pointer rounded-xl border border-green-200 bg-green-50 px-3 py-2 text-xs font-bold text-green-700 transition-colors hover:bg-green-100"
-						>+</button>
+							>+</button
+						>
 					</div>
 				</div>
 				<div>
 					<p class="mb-2 text-xs font-semibold text-stone-500">Недоліки</p>
 					<div class="mb-2 flex flex-wrap gap-1.5">
 						{#each cons as con, i}
-							<span class="flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-700">
+							<span
+								class="flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-700"
+							>
 								− {con}
-								<button onclick={() => (cons = cons.filter((_, j) => j !== i))} class="cursor-pointer text-red-400 hover:text-red-700">×</button>
+								<button
+									onclick={() => (cons = cons.filter((_, j) => j !== i))}
+									class="cursor-pointer text-red-400 hover:text-red-700">×</button
+								>
 							</span>
 						{/each}
 					</div>
@@ -377,13 +459,16 @@
 						<button
 							onclick={addCon}
 							class="cursor-pointer rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 transition-colors hover:bg-red-100"
-						>+</button>
+							>+</button
+						>
 					</div>
 				</div>
 			</div>
 
 			{#if submitError}
-				<p class="mb-3 rounded-xl bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">{submitError}</p>
+				<p class="mb-3 rounded-xl bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">
+					{submitError}
+				</p>
 			{/if}
 
 			<div class="flex justify-end">
@@ -397,10 +482,16 @@
 			</div>
 		</div>
 	{:else if !data.isAuthenticated}
-		<div class="animate-up mb-8 rounded-3xl border border-stone-200 bg-white p-6 text-center" style="animation-delay: 0.1s">
+		<div
+			class="mb-8 animate-up rounded-3xl border border-stone-200 bg-white p-6 text-center"
+			style="animation-delay: 0.1s"
+		>
 			<div class="mb-3 text-3xl">🔒</div>
 			<p class="mb-4 text-sm text-stone-500">Увійдіть, щоб залишити відгук</p>
-			<a href="/sign-in" class="inline-block rounded-xl bg-[#0057B7] px-5 py-2 font-[Outfit] text-sm font-bold text-white hover:bg-[#0046a0]">
+			<a
+				href="/sign-in"
+				class="inline-block rounded-xl bg-[#0057B7] px-5 py-2 font-[Outfit] text-sm font-bold text-white hover:bg-[#0046a0]"
+			>
 				Увійти
 			</a>
 		</div>
@@ -413,20 +504,30 @@
 		</h2>
 
 		{#if reviews.length === 0}
-			<div class="rounded-3xl border border-dashed border-stone-200 p-12 text-center text-sm text-stone-400">
+			<div
+				class="rounded-3xl border border-dashed border-stone-200 p-12 text-center text-sm text-stone-400"
+			>
 				Будьте першим, хто залишить відгук!
 			</div>
 		{/if}
 
 		<div class="flex flex-col gap-4">
 			{#each reviews as r (r.id)}
-				<div class="animate-up rounded-2xl border border-stone-200 bg-white p-5 transition-shadow hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)]">
+				<div
+					class="animate-up rounded-2xl border border-stone-200 bg-white p-5 transition-shadow hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)]"
+				>
 					<!-- Header -->
 					<div class="mb-3 flex items-start gap-3">
 						{#if r.avatar}
-							<img src={r.avatar} alt={r.username} class="h-10 w-10 rounded-full object-cover ring-2 ring-stone-100" />
+							<img
+								src={r.avatar}
+								alt={r.username}
+								class="h-10 w-10 rounded-full object-cover ring-2 ring-stone-100"
+							/>
 						{:else}
-							<div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0057B7] to-[#7c3aed] font-[Outfit] text-xs font-extrabold text-white ring-2 ring-stone-100">
+							<div
+								class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0057B7] to-[#7c3aed] font-[Outfit] text-xs font-extrabold text-white ring-2 ring-stone-100"
+							>
 								{initials(r.username)}
 							</div>
 						{/if}
@@ -434,10 +535,12 @@
 							<div class="flex flex-wrap items-center gap-2">
 								<span class="font-[Outfit] text-sm font-bold text-stone-800">@{r.username}</span>
 								<span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5">
-									<span class="flex text-amber-400 text-xs leading-none">
+									<span class="flex text-xs leading-none text-amber-400">
 										{#each stars(5, r.rating) as s}<span>{s}</span>{/each}
 									</span>
-									<span class="font-[JetBrains_Mono] text-[10px] font-bold text-amber-600">{r.rating}/5</span>
+									<span class="font-[JetBrains_Mono] text-[10px] font-bold text-amber-600"
+										>{r.rating}/5</span
+									>
 								</span>
 							</div>
 							<span class="text-[11px] text-stone-400">{formatDate(r.timestamp)}</span>
@@ -450,7 +553,12 @@
 									title="Редагувати"
 								>
 									<svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-										<path d="M14.5 2.5a2.121 2.121 0 0 1 3 3L6 17H3v-3L14.5 2.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+										<path
+											d="M14.5 2.5a2.121 2.121 0 0 1 3 3L6 17H3v-3L14.5 2.5z"
+											stroke="currentColor"
+											stroke-width="1.8"
+											stroke-linejoin="round"
+										/>
 									</svg>
 								</button>
 								<button
@@ -459,7 +567,13 @@
 									title="Видалити"
 								>
 									<svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-										<path d="M3 5h14M8 5V3h4v2M6 5l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+										<path
+											d="M3 5h14M8 5V3h4v2M6 5l1 12h6l1-12"
+											stroke="currentColor"
+											stroke-width="1.8"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
 									</svg>
 								</button>
 							</div>
@@ -480,7 +594,8 @@
 								<button
 									onclick={() => (deleteConfirmId = null)}
 									class="cursor-pointer rounded-lg border border-stone-200 bg-white px-4 py-1.5 text-xs font-bold text-stone-600 transition-colors hover:bg-stone-50"
-								>Скасувати</button>
+									>Скасувати</button
+								>
 							</div>
 						</div>
 					{:else if editingId === r.id}
@@ -488,15 +603,20 @@
 						<div class="space-y-4">
 							<!-- Star picker -->
 							<div>
-								<p class="mb-1.5 text-xs font-semibold text-stone-500">Рейтинг <span class="text-red-500">*</span></p>
+								<p class="mb-1.5 text-xs font-semibold text-stone-500">
+									Рейтинг <span class="text-red-500">*</span>
+								</p>
 								<div class="flex gap-1">
-									{#each [1,2,3,4,5] as n}
+									{#each [1, 2, 3, 4, 5] as n}
 										<button
 											onmouseenter={() => (editHovStar = n)}
 											onmouseleave={() => (editHovStar = 0)}
 											onclick={() => (editRating = n)}
-											class="cursor-pointer text-2xl transition-transform duration-100 hover:scale-110 {(editHovStar || editRating) >= n ? 'text-amber-400' : 'text-stone-200'}"
-										>★</button>
+											class="cursor-pointer text-2xl transition-transform duration-100 hover:scale-110 {(editHovStar ||
+												editRating) >= n
+												? 'text-amber-400'
+												: 'text-stone-200'}">★</button
+										>
 									{/each}
 								</div>
 							</div>
@@ -519,15 +639,39 @@
 								<p class="mb-1.5 text-xs font-semibold text-stone-500">Переваги</p>
 								<div class="mb-1.5 flex flex-wrap gap-1.5">
 									{#each editPros as pro, i}
-										<span class="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-semibold text-green-700">
+										<span
+											class="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-semibold text-green-700"
+										>
 											+ {pro}
-											<button onclick={() => (editPros = editPros.filter((_, j) => j !== i))} class="cursor-pointer text-green-400 hover:text-green-700">×</button>
+											<button
+												onclick={() => (editPros = editPros.filter((_, j) => j !== i))}
+												class="cursor-pointer text-green-400 hover:text-green-700">×</button
+											>
 										</span>
 									{/each}
 								</div>
 								<div class="flex gap-2">
-									<input bind:value={editNewPro} onkeydown={(e) => { if (e.key === 'Enter' && editNewPro.trim()) { editPros = [...editPros, editNewPro.trim()]; editNewPro = ''; } }} placeholder="Додати перевагу..." class="flex-1 rounded-xl border border-stone-200 px-3 py-2 text-xs outline-none focus:border-green-400" />
-									<button onclick={() => { if (editNewPro.trim()) { editPros = [...editPros, editNewPro.trim()]; editNewPro = ''; } }} class="cursor-pointer rounded-xl border border-green-200 bg-green-50 px-3 py-2 text-xs font-bold text-green-700 hover:bg-green-100">+</button>
+									<input
+										bind:value={editNewPro}
+										onkeydown={(e) => {
+											if (e.key === 'Enter' && editNewPro.trim()) {
+												editPros = [...editPros, editNewPro.trim()];
+												editNewPro = '';
+											}
+										}}
+										placeholder="Додати перевагу..."
+										class="flex-1 rounded-xl border border-stone-200 px-3 py-2 text-xs outline-none focus:border-green-400"
+									/>
+									<button
+										onclick={() => {
+											if (editNewPro.trim()) {
+												editPros = [...editPros, editNewPro.trim()];
+												editNewPro = '';
+											}
+										}}
+										class="cursor-pointer rounded-xl border border-green-200 bg-green-50 px-3 py-2 text-xs font-bold text-green-700 hover:bg-green-100"
+										>+</button
+									>
 								</div>
 							</div>
 							<!-- Cons -->
@@ -535,22 +679,52 @@
 								<p class="mb-1.5 text-xs font-semibold text-stone-500">Недоліки</p>
 								<div class="mb-1.5 flex flex-wrap gap-1.5">
 									{#each editCons as con, i}
-										<span class="flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-700">
+										<span
+											class="flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-700"
+										>
 											− {con}
-											<button onclick={() => (editCons = editCons.filter((_, j) => j !== i))} class="cursor-pointer text-red-400 hover:text-red-700">×</button>
+											<button
+												onclick={() => (editCons = editCons.filter((_, j) => j !== i))}
+												class="cursor-pointer text-red-400 hover:text-red-700">×</button
+											>
 										</span>
 									{/each}
 								</div>
 								<div class="flex gap-2">
-									<input bind:value={editNewCon} onkeydown={(e) => { if (e.key === 'Enter' && editNewCon.trim()) { editCons = [...editCons, editNewCon.trim()]; editNewCon = ''; } }} placeholder="Додати недолік..." class="flex-1 rounded-xl border border-stone-200 px-3 py-2 text-xs outline-none focus:border-red-400" />
-									<button onclick={() => { if (editNewCon.trim()) { editCons = [...editCons, editNewCon.trim()]; editNewCon = ''; } }} class="cursor-pointer rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100">+</button>
+									<input
+										bind:value={editNewCon}
+										onkeydown={(e) => {
+											if (e.key === 'Enter' && editNewCon.trim()) {
+												editCons = [...editCons, editNewCon.trim()];
+												editNewCon = '';
+											}
+										}}
+										placeholder="Додати недолік..."
+										class="flex-1 rounded-xl border border-stone-200 px-3 py-2 text-xs outline-none focus:border-red-400"
+									/>
+									<button
+										onclick={() => {
+											if (editNewCon.trim()) {
+												editCons = [...editCons, editNewCon.trim()];
+												editNewCon = '';
+											}
+										}}
+										class="cursor-pointer rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100"
+										>+</button
+									>
 								</div>
 							</div>
 							{#if editError}
-								<p class="rounded-xl bg-red-50 px-4 py-2 text-xs font-semibold text-red-600">{editError}</p>
+								<p class="rounded-xl bg-red-50 px-4 py-2 text-xs font-semibold text-red-600">
+									{editError}
+								</p>
 							{/if}
 							<div class="flex justify-end gap-2">
-								<button onclick={cancelEdit} class="cursor-pointer rounded-xl border border-stone-200 px-4 py-2 text-xs font-bold text-stone-600 hover:bg-stone-50">Скасувати</button>
+								<button
+									onclick={cancelEdit}
+									class="cursor-pointer rounded-xl border border-stone-200 px-4 py-2 text-xs font-bold text-stone-600 hover:bg-stone-50"
+									>Скасувати</button
+								>
 								<button
 									onclick={() => saveEdit(r.id)}
 									disabled={editSaving}
@@ -572,17 +746,29 @@
 								{#if r.pros?.length}
 									<div class="rounded-2xl border border-green-100 bg-green-50/60 p-4">
 										<div class="mb-2.5 flex items-center gap-1.5">
-											<span class="grid h-5 w-5 place-items-center rounded-full bg-green-500 text-white">
+											<span
+												class="grid h-5 w-5 place-items-center rounded-full bg-green-500 text-white"
+											>
 												<svg width="11" height="11" viewBox="0 0 20 20" fill="none">
-													<path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+													<path
+														d="M4 10.5l4 4 8-9"
+														stroke="currentColor"
+														stroke-width="2.5"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													/>
 												</svg>
 											</span>
-											<span class="font-[Outfit] text-xs font-extrabold uppercase tracking-wide text-green-700">Переваги</span>
+											<span
+												class="font-[Outfit] text-xs font-extrabold tracking-wide text-green-700 uppercase"
+												>Переваги</span
+											>
 										</div>
 										<ul class="flex flex-col gap-2">
 											{#each r.pros as pro}
 												<li class="flex items-start gap-2 text-sm text-stone-700">
-													<span class="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-green-400"></span>
+													<span class="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-green-400"
+													></span>
 													<span>{pro}</span>
 												</li>
 											{/each}
@@ -592,17 +778,28 @@
 								{#if r.cons?.length}
 									<div class="rounded-2xl border border-rose-100 bg-rose-50/60 p-4">
 										<div class="mb-2.5 flex items-center gap-1.5">
-											<span class="grid h-5 w-5 place-items-center rounded-full bg-rose-500 text-white">
+											<span
+												class="grid h-5 w-5 place-items-center rounded-full bg-rose-500 text-white"
+											>
 												<svg width="11" height="11" viewBox="0 0 20 20" fill="none">
-													<path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+													<path
+														d="M5 5l10 10M15 5L5 15"
+														stroke="currentColor"
+														stroke-width="2.5"
+														stroke-linecap="round"
+													/>
 												</svg>
 											</span>
-											<span class="font-[Outfit] text-xs font-extrabold uppercase tracking-wide text-rose-700">Недоліки</span>
+											<span
+												class="font-[Outfit] text-xs font-extrabold tracking-wide text-rose-700 uppercase"
+												>Недоліки</span
+											>
 										</div>
 										<ul class="flex flex-col gap-2">
 											{#each r.cons as con}
 												<li class="flex items-start gap-2 text-sm text-stone-700">
-													<span class="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400"></span>
+													<span class="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400"
+													></span>
 													<span>{con}</span>
 												</li>
 											{/each}
@@ -614,15 +811,25 @@
 
 						<!-- Helpful votes -->
 						<div class="mt-4 flex items-center gap-2 border-t border-stone-100 pt-3">
-							<span class="mr-1 font-[Outfit] text-[11px] font-semibold text-stone-400">Корисно?</span>
+							<span class="mr-1 font-[Outfit] text-[11px] font-semibold text-stone-400"
+								>Корисно?</span
+							>
 							<button
 								onclick={() => vote(r, 1)}
 								disabled={!data.isAuthenticated || votingId === r.id}
 								title={data.isAuthenticated ? 'Корисний відгук' : 'Увійдіть, щоб голосувати'}
-								class="flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-[Outfit] text-xs font-semibold transition-colors disabled:cursor-default disabled:opacity-50 {r.myVote === 1 ? 'border-green-300 bg-green-50 text-green-700' : 'border-stone-200 text-stone-500 hover:bg-stone-50'}"
+								class="flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-[Outfit] text-xs font-semibold transition-colors disabled:cursor-default disabled:opacity-50 {r.myVote ===
+								1
+									? 'border-green-300 bg-green-50 text-green-700'
+									: 'border-stone-200 text-stone-500 hover:bg-stone-50'}"
 							>
 								<svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-									<path d="M6 9v8H3V9h3zm0 0l4-6c1 0 2 .8 2 2v3h4.5c.8 0 1.5.7 1.3 1.6l-1.3 5.4c-.2.8-.9 1.4-1.7 1.4H6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+									<path
+										d="M6 9v8H3V9h3zm0 0l4-6c1 0 2 .8 2 2v3h4.5c.8 0 1.5.7 1.3 1.6l-1.3 5.4c-.2.8-.9 1.4-1.7 1.4H6"
+										stroke="currentColor"
+										stroke-width="1.6"
+										stroke-linejoin="round"
+									/>
 								</svg>
 								{r.likes}
 							</button>
@@ -630,10 +837,18 @@
 								onclick={() => vote(r, -1)}
 								disabled={!data.isAuthenticated || votingId === r.id}
 								title={data.isAuthenticated ? 'Некорисний відгук' : 'Увійдіть, щоб голосувати'}
-								class="flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-[Outfit] text-xs font-semibold transition-colors disabled:cursor-default disabled:opacity-50 {r.myVote === -1 ? 'border-red-300 bg-red-50 text-red-600' : 'border-stone-200 text-stone-500 hover:bg-stone-50'}"
+								class="flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 font-[Outfit] text-xs font-semibold transition-colors disabled:cursor-default disabled:opacity-50 {r.myVote ===
+								-1
+									? 'border-red-300 bg-red-50 text-red-600'
+									: 'border-stone-200 text-stone-500 hover:bg-stone-50'}"
 							>
 								<svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-									<path d="M14 11V3h3v8h-3zm0 0l-4 6c-1 0-2-.8-2-2v-3H3.5c-.8 0-1.5-.7-1.3-1.6l1.3-5.4C3.7 3.6 4.4 3 5.2 3H14" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+									<path
+										d="M14 11V3h3v8h-3zm0 0l-4 6c-1 0-2-.8-2-2v-3H3.5c-.8 0-1.5-.7-1.3-1.6l1.3-5.4C3.7 3.6 4.4 3 5.2 3H14"
+										stroke="currentColor"
+										stroke-width="1.6"
+										stroke-linejoin="round"
+									/>
 								</svg>
 								{r.dislikes}
 							</button>
