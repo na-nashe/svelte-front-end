@@ -125,11 +125,11 @@
 	}
 </script>
 
-<section class="mx-auto max-w-[1040px] px-6 pb-20">
-	<HeroCatalog categoriesCount={categories.length} {items} />
+<HeroCatalog categoriesCount={categories.length} {items} />
 
+<div class="mx-auto max-w-[1040px] px-6 pb-20">
 	<!-- Category pills -->
-	<div class="mb-7">
+	<div class="mb-7 mt-8">
 		<CategoryPills bind:activeCat={cat} {categories} {items} />
 	</div>
 
@@ -211,4 +211,4 @@
 			{/if}
 		</div>
 	</div>
-</section>
+</div>
