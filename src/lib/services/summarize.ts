@@ -41,7 +41,6 @@ export async function regenerateSummary(alternativeId: number): Promise<void> {
 		model: openai('gpt-4o-mini'),
 		prompt: `Проаналізуй ці відгуки користувачів і склади короткий підсумок (2-3 речення) українською мовою. Зазнач загальне враження, головні переваги та недоліки:\n\n${reviewsText}`
 	});
-	console.log('text', text);
 	await db
 		.insert(reviewSummaries)
 		.values({ alternativeId, summary: text, updatedAt: new Date().toISOString() })

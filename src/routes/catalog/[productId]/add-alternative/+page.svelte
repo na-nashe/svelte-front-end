@@ -17,7 +17,12 @@
 		class="mb-8 inline-flex items-center gap-1.5 font-[Outfit] text-sm text-stone-400 transition-colors hover:text-stone-700"
 	>
 		<svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-			<path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+			<path
+				d="M12.5 15L7.5 10L12.5 5"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+			/>
 		</svg>
 		Назад до каталогу
 	</a>
@@ -40,7 +45,7 @@
 						required
 						placeholder="Назва альтернативи..."
 						maxlength="150"
-						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 					/>
 				</div>
 
@@ -53,7 +58,7 @@
 						id="countryId"
 						name="countryId"
 						required
-						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 					>
 						<option value="" disabled selected>Оберіть країну...</option>
 						{#each data.countries as c}
@@ -64,12 +69,22 @@
 
 				<!-- Pricing model -->
 				<div>
-					<p class="mb-2 text-xs font-semibold text-stone-500">Модель ціноутворення <span class="text-red-500">*</span></p>
+					<p class="mb-2 text-xs font-semibold text-stone-500">
+						Модель ціноутворення <span class="text-red-500">*</span>
+					</p>
 					<div class="flex gap-2">
 						{#each pricingOptions as opt}
 							<label class="flex-1 cursor-pointer">
-								<input type="radio" name="pricingModel" value={opt.value} class="peer sr-only" required />
-								<span class="block rounded-xl border border-stone-200 px-3 py-2.5 text-center text-xs font-semibold text-stone-500 transition-all peer-checked:border-[#0057B7] peer-checked:bg-[#0057B710] peer-checked:text-[#0057B7]">
+								<input
+									type="radio"
+									name="pricingModel"
+									value={opt.value}
+									class="peer sr-only"
+									required
+								/>
+								<span
+									class="block rounded-xl border border-stone-200 px-3 py-2.5 text-center text-xs font-semibold text-stone-500 transition-all peer-checked:border-[#0057B7] peer-checked:bg-[#0057B710] peer-checked:text-[#0057B7]"
+								>
 									{opt.label}
 								</span>
 							</label>
@@ -87,7 +102,7 @@
 						name="description"
 						rows="3"
 						placeholder="Короткий опис..."
-						class="w-full resize-none rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+						class="w-full resize-none rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 					></textarea>
 				</div>
 
@@ -102,12 +117,14 @@
 						type="url"
 						placeholder="https://..."
 						maxlength="500"
-						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm outline-none transition-colors focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
+						class="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 font-[Outfit] text-sm transition-colors outline-none focus:border-[#0057B7] focus:ring-2 focus:ring-[#0057B710]"
 					/>
 				</div>
 
 				{#if form?.error}
-					<p class="rounded-xl bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">{form.error}</p>
+					<p class="rounded-xl bg-red-50 px-4 py-2.5 text-xs font-semibold text-red-600">
+						{form.error}
+					</p>
 				{/if}
 
 				<div class="flex justify-end pt-1">

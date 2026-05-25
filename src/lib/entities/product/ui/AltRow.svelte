@@ -42,7 +42,9 @@
 	<div class="shrink-0 text-right">
 		{#if alt.rev > 0}
 			<span class="text-[13px] font-bold text-amber-500">★ {alt.r.toFixed(1)}</span>
-			<div class="mt-0.5 text-[9px] text-stone-400">{alt.rev} відгук{alt.rev === 1 ? '' : alt.rev < 5 ? 'и' : 'ів'}</div>
+			<div class="mt-0.5 text-[9px] text-stone-400">
+				{alt.rev} відгук{alt.rev === 1 ? '' : alt.rev < 5 ? 'и' : 'ів'}
+			</div>
 		{:else}
 			<span class="text-[11px] text-stone-300 italic">немає відгуків</span>
 		{/if}

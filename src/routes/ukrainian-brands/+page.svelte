@@ -140,7 +140,7 @@
 						style="background:#FFD70030">🇺🇦</span
 					>
 					<span
-						class="font-[JetBrains_Mono] text-[10px] font-bold uppercase tracking-widest"
+						class="font-[JetBrains_Mono] text-[10px] font-bold tracking-widest uppercase"
 						style="color:#FFD700">Підтримуй наше</span
 					>
 				</div>
@@ -169,7 +169,7 @@
 				style="background:#ffffff0a; backdrop-filter:blur(16px); border:1px solid #ffffff10; animation: slideL .6s ease .2s both"
 			>
 				<p
-					class="mb-3.5 font-[JetBrains_Mono] text-[9px] font-bold uppercase tracking-widest"
+					class="mb-3.5 font-[JetBrains_Mono] text-[9px] font-bold tracking-widest uppercase"
 					style="color:#ffffff40"
 				>
 					Наш вплив
@@ -206,7 +206,10 @@
 							onclick={() => (impactIndex = i)}
 							aria-label="Показник {i + 1}"
 							class="h-[3px] flex-1 cursor-pointer rounded-sm transition-all duration-400"
-							style="background: {i === impactIndex ? '#FFD700' : '#ffffff15'}; box-shadow: {i === impactIndex ? '0 0 8px #FFD70040' : 'none'}"
+							style="background: {i === impactIndex ? '#FFD700' : '#ffffff15'}; box-shadow: {i ===
+							impactIndex
+								? '0 0 8px #FFD70040'
+								: 'none'}"
 						></button>
 					{/each}
 				</div>
@@ -240,7 +243,6 @@
 
 <!-- ─── MAIN CONTENT ─── -->
 <div class="mx-auto max-w-[1040px] px-6 pb-24">
-
 	<!-- ─── CATEGORY FILTER ─── -->
 	<div class="mb-8 flex flex-wrap gap-1.5" style="animation: fadeIn .4s ease both">
 		{#each spotlightCategories as cat, i (cat)}
@@ -293,11 +295,13 @@
 					<!-- color accent bar -->
 					<div
 						class="h-1 transition-opacity duration-400"
-						style="background: linear-gradient(90deg, {brand.color}, {brand.color}60); opacity: {isHov ? 1 : 0.2}"
+						style="background: linear-gradient(90deg, {brand.color}, {brand.color}60); opacity: {isHov
+							? 1
+							: 0.2}"
 					></div>
 					<!-- glow -->
 					<div
-						class="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full transition-opacity duration-400"
+						class="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full transition-opacity duration-400"
 						style="background:{brand.color}; opacity:{isHov ? 0.06 : 0}; filter:blur(30px)"
 					></div>
 
@@ -365,14 +369,19 @@
 
 					<!-- expanded details -->
 					<div
-						style="max-height:{isExp ? '200px' : '0'}; overflow:hidden; transition:max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s; opacity:{isExp ? 1 : 0}"
+						style="max-height:{isExp
+							? '200px'
+							: '0'}; overflow:hidden; transition:max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s; opacity:{isExp
+							? 1
+							: 0}"
 					>
 						<div class="px-7 pb-6">
 							<div class="mb-3 flex gap-2">
 								{#each ['Надійний', 'Інноваційний', 'Глобальний'] as t (t)}
 									<span
 										class="rounded-lg px-2.5 py-1 font-[Outfit] text-[10px] font-semibold text-stone-600"
-										style="background:#f5f5f4">
+										style="background:#f5f5f4"
+									>
 										{t}
 									</span>
 								{/each}
@@ -411,7 +420,7 @@
 					role="presentation"
 				>
 					<div
-						class="pointer-events-none absolute -right-5 -top-5 h-20 w-20 rounded-full transition-opacity duration-400"
+						class="pointer-events-none absolute -top-5 -right-5 h-20 w-20 rounded-full transition-opacity duration-400"
 						style="background:{brand.color}; opacity:{isHov ? 0.06 : 0}; filter:blur(20px)"
 					></div>
 
@@ -449,7 +458,9 @@
 								<span class="font-[Outfit] text-[10px] text-stone-400">users</span>
 								<span
 									class="ml-auto font-[Outfit] text-[11px] font-bold transition-all duration-300"
-									style="color:{brand.color}; opacity:{isHov ? 1 : 0}; transform:{isHov ? 'translateX(0)' : 'translateX(-6px)'}"
+									style="color:{brand.color}; opacity:{isHov ? 1 : 0}; transform:{isHov
+										? 'translateX(0)'
+										: 'translateX(-6px)'}"
 								>
 									→
 								</span>
@@ -466,7 +477,7 @@
 		<div class="mb-14">
 			<div class="mb-6 text-center">
 				<span
-					class="font-[JetBrains_Mono] text-[10px] font-bold uppercase tracking-widest text-stone-400"
+					class="font-[JetBrains_Mono] text-[10px] font-bold tracking-widest text-stone-400 uppercase"
 				>
 					В нашому каталозі
 				</span>
@@ -491,7 +502,7 @@
 						<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 							{#each group.brands as brand, i (brand.name)}
 								<div
-									class="animate-up flex flex-col gap-3 rounded-2xl border border-stone-100 bg-white p-5 transition-all duration-250 hover:-translate-y-0.5 hover:shadow-md"
+									class="flex animate-up flex-col gap-3 rounded-2xl border border-stone-100 bg-white p-5 transition-all duration-250 hover:-translate-y-0.5 hover:shadow-md"
 									style="animation-delay:{i * 0.05}s; border-color:{brand.color}18"
 								>
 									<div class="flex items-start gap-3">
@@ -545,7 +556,7 @@
 												>
 											</div>
 										{:else}
-											<span class="font-[Outfit] text-[11px] italic text-stone-300"
+											<span class="font-[Outfit] text-[11px] text-stone-300 italic"
 												>немає відгуків</span
 											>
 										{/if}
@@ -582,7 +593,7 @@
 	<div class="mb-14">
 		<div class="mb-7 text-center" style="animation: up .4s ease both">
 			<span
-				class="font-[JetBrains_Mono] text-[10px] font-bold uppercase tracking-widest text-[#0057B7]"
+				class="font-[JetBrains_Mono] text-[10px] font-bold tracking-widest text-[#0057B7] uppercase"
 			>
 				Історії переходу
 			</span>
@@ -609,19 +620,19 @@
 					<!-- stars -->
 					<div class="mb-3">
 						{#each Array(5) as _, s (s)}
-							<span style="color:{s < story.stars ? '#FBBF24' : '#e7e5e4'}; font-size:14px; margin-right:1px"
-								>★</span
+							<span
+								style="color:{s < story.stars
+									? '#FBBF24'
+									: '#e7e5e4'}; font-size:14px; margin-right:1px">★</span
 							>
 						{/each}
 					</div>
 
-					<p class="mb-4 font-[Outfit] text-[13px] italic leading-relaxed text-stone-600">
+					<p class="mb-4 font-[Outfit] text-[13px] leading-relaxed text-stone-600 italic">
 						«{story.text}»
 					</p>
 
-					<div
-						class="flex items-center gap-2.5 border-t border-stone-100 pt-3.5"
-					>
+					<div class="flex items-center gap-2.5 border-t border-stone-100 pt-3.5">
 						<div
 							class="grid h-8 w-8 place-items-center rounded-full font-[Outfit] text-[11px] font-bold"
 							style="background:{story.color}0c; color:{story.color}; border:1.5px solid {story.color}14"
@@ -642,7 +653,7 @@
 	<div class="mb-14">
 		<div class="mb-8 text-center" style="animation: up .4s ease both">
 			<span
-				class="font-[JetBrains_Mono] text-[10px] font-bold uppercase tracking-widest text-amber-500"
+				class="font-[JetBrains_Mono] text-[10px] font-bold tracking-widest text-amber-500 uppercase"
 			>
 				Шлях UA-Tech
 			</span>
@@ -654,15 +665,12 @@
 		<div class="relative mx-auto max-w-[640px]">
 			<!-- vertical line -->
 			<div
-				class="absolute left-6 top-0 bottom-0 w-0.5 rounded-sm"
+				class="absolute top-0 bottom-0 left-6 w-0.5 rounded-sm"
 				style="background:linear-gradient(180deg,#e7e5e4,#0057B720,#e7e5e4)"
 			></div>
 
 			{#each milestones as m, i (m.year)}
-				<div
-					class="relative mb-5 flex gap-5"
-					style="animation: slideR .4s ease {i * 0.08}s both"
-				>
+				<div class="relative mb-5 flex gap-5" style="animation: slideR .4s ease {i * 0.08}s both">
 					<button
 						class="relative z-10 grid h-12 w-12 flex-shrink-0 place-items-center rounded-[14px] border-2 border-stone-200 bg-white font-[JetBrains_Mono] text-[11px] font-bold text-[#0057B7] transition-all duration-250"
 						onmouseenter={(e) => {
@@ -708,7 +716,7 @@
 		style="background:linear-gradient(135deg,#0057B7 0%,#1e40af 100%); animation: up .5s ease .2s both"
 	>
 		<div
-			class="pointer-events-none absolute left-1/2 top-0 -ml-24 h-48 w-48 rounded-full opacity-[0.08] blur-3xl"
+			class="pointer-events-none absolute top-0 left-1/2 -ml-24 h-48 w-48 rounded-full opacity-[0.08] blur-3xl"
 			style="background:#FFD700; animation:waveFloat 10s ease-in-out infinite"
 		></div>
 

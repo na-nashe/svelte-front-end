@@ -16,7 +16,39 @@ export const handleFetch: HandleFetch = async ({ request, fetch }) => {
 };
 
 const authHandle: Handle = async ({ event, resolve }) => {
-	const token = event.cookies.get('access_token');
+	let token = event.cookies.get('access_token');
+
+	if (!token) {
+		const refreshToken = event.cookies.get('refresh_token');
+		if (refreshToken) {
+			try {
+				const refreshResponse = await fetch(`${getApiBaseURL()}/auth/accesstoken/refresh`, {
+					method: 'POST',
+					headers: { Cookie: `refresh_token=${refreshToken}` }
+				});
+				if (refreshResponse.ok) {
+					const newAccessToken = refreshResponse.headers
+						.get('Authorization')
+						?.replace('Bearer ', '');
+					if (newAccessToken) {
+						event.cookies.set('access_token', newAccessToken, {
+							httpOnly: true,
+							secure: true,
+							sameSite: 'strict',
+							path: '/',
+							maxAge: 60 * 15
+						});
+						token = newAccessToken;
+					}
+				} else {
+					event.cookies.delete('refresh_token', { path: '/' });
+				}
+			} catch {
+				// network error — continue without token
+			}
+		}
+	}
+
 	event.locals.token = token ?? null;
 	event.locals.isAuthenticated = !!token;
 

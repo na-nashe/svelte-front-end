@@ -81,7 +81,10 @@ export const actions: Actions = {
 				name,
 				categoryId: product.categoryId,
 				originId: countryId,
-				pricingModel: sql`${pricingModel}::pricing_model_enum` as unknown as 'FREE' | 'PAID' | 'FREEMIUM',
+				pricingModel: sql`${pricingModel}::pricing_model_enum` as unknown as
+					| 'FREE'
+					| 'PAID'
+					| 'FREEMIUM',
 				description,
 				url,
 				aiGenerated: false

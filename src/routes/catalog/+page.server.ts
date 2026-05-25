@@ -21,7 +21,10 @@ async function attachRatings(products: ApiProduct[]): Promise<ApiProduct[]> {
 		.groupBy(reviews.alternativeId);
 
 	const ratingMap = new Map(
-		rows.map((r) => [r.alternativeId, { avg: parseFloat(r.avgRating ?? '0'), count: r.reviewCount }])
+		rows.map((r) => [
+			r.alternativeId,
+			{ avg: parseFloat(r.avgRating ?? '0'), count: r.reviewCount }
+		])
 	);
 
 	return products.map((p) => ({
