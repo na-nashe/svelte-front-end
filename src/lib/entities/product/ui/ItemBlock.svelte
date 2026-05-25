@@ -6,12 +6,14 @@
 		item,
 		index = 0,
 		openDefault = false,
-		onAltClick
+		onAltClick,
+		isAuthenticated = false
 	}: {
 		item: Product;
 		index?: number;
 		openDefault?: boolean;
 		onAltClick?: (a: Alternative) => void;
+		isAuthenticated?: boolean;
 	} = $props();
 
 	let open = $state(openDefault);
@@ -75,6 +77,15 @@
 			{#each item.alts as alt, j}
 				<AltRow {alt} index={j} onclick={onAltClick} />
 			{/each}
+			{#if isAuthenticated && item.id}
+				<a
+					href="/catalog/{item.id}/add-alternative"
+					class="mt-1 flex w-full items-center gap-2 rounded-[14px] px-4 py-3 text-left text-xs font-semibold text-stone-400 transition-colors hover:bg-stone-50 hover:text-stone-600"
+				>
+					<span class="flex h-6 w-6 items-center justify-center rounded-lg border border-dashed border-stone-300 text-sm">+</span>
+					Додати альтернативу
+				</a>
+			{/if}
 		</div>
 	</div>
 </div>

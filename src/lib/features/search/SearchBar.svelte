@@ -72,7 +72,7 @@
 	}
 </script>
 
-<div class="relative w-full">
+<div class="w-full">
 	<!-- Input bar -->
 	<div
 		class="flex items-center rounded-full bg-white transition-all duration-300
@@ -102,7 +102,7 @@
 			onblur={handleBlur}
 			onkeydown={handleKeydown}
 			placeholder="Назва продукту…"
-			class="min-w-0 flex-1 border-none bg-transparent font-[Outfit] font-medium text-stone-900 outline-none
+			class="min-w-0 flex-1 border-none bg-transparent font-[Outfit] font-medium text-stone-900 ring-0 outline-none focus:border-none
 				{big ? 'text-[17px]' : 'text-sm'}"
 		/>
 		{#if query}

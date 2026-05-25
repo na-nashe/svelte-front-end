@@ -3,7 +3,8 @@
 
 	const links: { label: string; href: string }[] = [
 		{ label: 'Про проєкт', href: resolve('/about') },
-		{ label: 'Контакти', href: resolve('/contacts') }
+		{ label: 'Контакти', href: resolve('/contacts') },
+		{ label: 'Українські бренди', href: resolve('/ukrainian-brands') }
 	];
 </script>
 

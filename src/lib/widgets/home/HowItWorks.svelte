@@ -62,7 +62,7 @@
 	class="relative bg-[#fafaf9] px-4"
 	style="height: {steps.length * 100}vh"
 >
-	<div class="sticky top-0 flex h-screen items-center py-16">
+	<div class="sticky top-0 flex h-screen items-center pb-16">
 		<div class="mx-auto w-full max-w-5xl">
 			<!-- Header -->
 			<div class="mb-12 text-center">

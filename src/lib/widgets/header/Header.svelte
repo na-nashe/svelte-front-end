@@ -7,7 +7,8 @@
 
 	const tabs: { id: string; path: Parameters<typeof resolve>[0]; label: string }[] = [
 		{ id: 'home', path: '/', label: 'Головна' },
-		{ id: 'catalog', path: '/catalog', label: 'Каталог' }
+		{ id: 'catalog', path: '/catalog', label: 'Каталог' },
+		{ id: 'ukrainian-brands', path: '/ukrainian-brands', label: '🇺🇦 Свої бренди' }
 	];
 
 	const currentPath = $derived($page.url.pathname);
