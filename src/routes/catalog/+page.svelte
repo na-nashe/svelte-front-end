@@ -129,7 +129,7 @@
 
 <div class="mx-auto max-w-[1040px] px-6 pb-20">
 	<!-- Category pills -->
-	<div class="mb-7 mt-8">
+	<div class="mt-8 mb-7">
 		<CategoryPills bind:activeCat={cat} {categories} {items} />
 	</div>
 
@@ -187,7 +187,13 @@
 			{:else if viewMode === 'list'}
 				<div class="flex flex-col gap-3">
 					{#each sorted as it, i (it.orig)}
-						<ItemBlock item={it} index={i} openDefault={expandAll} onAltClick={handleAltClick} isAuthenticated={data.isAuthenticated} />
+						<ItemBlock
+							item={it}
+							index={i}
+							openDefault={expandAll}
+							onAltClick={handleAltClick}
+							isAuthenticated={data.isAuthenticated}
+						/>
 					{/each}
 				</div>
 			{:else}
