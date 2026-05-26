@@ -4,7 +4,7 @@
 			icon: '🇺🇦',
 			title: 'Українські бренди',
 			desc: 'Підтримай своїх — відкрий для себе українські продукти світового рівня',
-			href: '/nashe',
+			href: '/ukrainian-brands',
 			gradient: 'linear-gradient(135deg, #0057B7, #1e40af)'
 		}
 	];
