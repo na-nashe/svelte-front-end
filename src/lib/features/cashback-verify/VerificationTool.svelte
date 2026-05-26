@@ -11,16 +11,30 @@
 
 	let checked = $state<CashbackProduct | null>(null);
 	let showRes = $state(false);
+	let loading = $state(false);
 	let inputEl: HTMLInputElement | undefined = $state();
 	let resultEl: HTMLDivElement | undefined = $state();
 
-	function doCheck(val?: string) {
-		const q = (val || search).trim().toLowerCase();
+	async function doCheck(val?: string) {
+		const q = (val || search).trim();
 		if (!q) return;
-		const found = CB.find(
-			(p) => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)
-		);
-		checked = found || null;
+
+		loading = true;
+		try {
+			const res = await fetch(`/api/cashback?q=${encodeURIComponent(q)}`);
+			const results: CashbackProduct[] = await res.json();
+			checked = results.length > 0 ? results[0] : null;
+		} catch {
+			// Fallback to local search
+			const lq = q.toLowerCase();
+			checked =
+				CB.find(
+					(p) => p.name.toLowerCase().includes(lq) || p.brand.toLowerCase().includes(lq)
+				) ?? null;
+		} finally {
+			loading = false;
+		}
+
 		showRes = true;
 		setTimeout(() => resultEl?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
 	}
@@ -38,7 +52,7 @@
 
 <div
 	bind:this={resultEl}
-	class="mb-11 animate-up rounded-[28px] border-[1.5px] border-stone-200 bg-white p-9 shadow-[0_4px_32px_#00000004]"
+	class="mb-8 animate-up rounded-[20px] border-[1.5px] border-stone-200 bg-white p-5 shadow-[0_4px_32px_#00000004] sm:mb-11 sm:rounded-[28px] sm:p-9"
 	style="animation-delay: 0.1s"
 >
 	<!-- Header -->
@@ -55,18 +69,18 @@
 	</div>
 
 	<!-- Search input -->
-	<div class="mb-[18px] flex gap-2">
+	<div class="mb-[18px] flex flex-col gap-2 sm:flex-row">
 		<div
-			class="flex flex-1 cursor-text items-center gap-3 rounded-full border-2 border-stone-200 bg-stone-50 px-[22px] py-3 transition-all duration-[250ms] focus-within:border-[#065f46]"
+			class="flex w-full cursor-text items-center gap-2 rounded-full border-2 border-stone-200 bg-stone-50 px-4 py-2 transition-all duration-[250ms] focus-within:border-[#065f46] sm:flex-1 sm:gap-3 sm:px-[22px] sm:py-3"
 		>
 			<svg
-				width="20"
-				height="20"
+				width="16"
+				height="16"
 				viewBox="0 0 24 24"
 				fill="none"
 				stroke="#a8a29e"
 				stroke-width="2.5"
-				class="flex-shrink-0"
+				class="shrink-0 sm:h-5 sm:w-5"
 			>
 				<circle cx="11" cy="11" r="7" />
 				<line x1="16.5" y1="16.5" x2="21" y2="21" />
@@ -79,7 +93,7 @@
 					if (e.key === 'Enter') doCheck();
 				}}
 				placeholder="Назва товару або бренду…"
-				class="flex-1 border-none bg-transparent font-[Outfit] text-base font-medium text-stone-900 outline-none"
+				class="flex-1 border-none bg-transparent font-[Outfit] text-[16px] font-medium text-stone-900 outline-none"
 			/>
 			{#if search}
 				<button
@@ -88,7 +102,7 @@
 						showRes = false;
 						inputEl?.focus();
 					}}
-					class="grid h-6 w-6 cursor-pointer place-items-center rounded-full border-none bg-stone-100 text-[11px] text-stone-500"
+					class="grid h-6 w-6 shrink-0 cursor-pointer place-items-center rounded-full border-none bg-stone-100 text-[11px] text-stone-500"
 				>
 					✕
 				</button>
@@ -96,9 +110,10 @@
 		</div>
 		<button
 			onclick={() => doCheck()}
-			class="flex-shrink-0 cursor-pointer rounded-full border-none bg-[#065f46] px-8 py-3.5 font-[Outfit] text-[15px] font-bold text-white shadow-[0_4px_16px_#06593f20] transition-all duration-200 hover:scale-[1.03] hover:bg-[#047857] hover:shadow-[0_8px_24px_#06593f30]"
+			disabled={loading}
+			class="w-full cursor-pointer rounded-full border-none bg-[#065f46] py-2.5 font-[Outfit] text-[14px] font-bold text-white shadow-[0_4px_16px_#06593f20] transition-all duration-200 hover:bg-[#047857] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:flex-shrink-0 sm:px-8 sm:py-3.5 sm:text-[15px] sm:hover:scale-[1.03] sm:hover:shadow-[0_8px_24px_#06593f30]"
 		>
-			Перевірити
+			{loading ? '…' : 'Перевірити'}
 		</button>
 	</div>
 
@@ -110,10 +125,10 @@
 				<div
 					class="overflow-hidden rounded-[20px] border-2 border-emerald-600 bg-gradient-to-br from-green-50 via-green-50/50 to-green-50"
 				>
-					<div class="p-[26px_28px]">
+					<div class="p-4 sm:p-[26px_28px]">
 						<div class="flex items-center gap-4">
 							<div
-								class="grid h-14 w-14 animate-scale-in place-items-center rounded-2xl border-2 border-[#05966920] bg-[#05966915]"
+								class="grid h-12 w-12 shrink-0 animate-scale-in place-items-center rounded-2xl border-2 border-[#05966920] bg-[#05966915] sm:h-14 sm:w-14"
 								style="animation-delay: 0.1s"
 							>
 								<svg
@@ -130,13 +145,18 @@
 								</svg>
 							</div>
 							<div class="flex-1 animate-slide-r" style="animation-delay: 0.15s">
-								<div class="mb-1.5 flex items-center gap-2">
+								<div class="mb-1.5 flex items-center gap-2 flex-wrap">
 									<span class="text-[19px] font-black text-[#065f46]">Кешбек діє!</span>
 									<span
 										class="rounded-full bg-emerald-600 px-3.5 py-1 font-[JetBrains_Mono] text-[13px] font-bold text-white shadow-[0_2px_8px_#05966930]"
 									>
 										-{checked.pct}%
 									</span>
+									{#if checked.aiFound}
+										<span class="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-[JetBrains_Mono] text-[10px] font-bold text-indigo-600">
+											🤖 AI пошук
+										</span>
+									{/if}
 								</div>
 								<div class="flex flex-wrap gap-2">
 									<div
@@ -158,10 +178,10 @@
 						</div>
 
 						<!-- Tips -->
-						<div class="mt-[18px] flex animate-up gap-2" style="animation-delay: 0.3s">
-							{#each [['Відскануйте чек у Дії', '📱'], ['Кешбек за 5 днів', '⏱️'], ['На будь-яку картку', '💳']] as [text, icon]}
+						<div class="mt-[18px] flex flex-wrap animate-up gap-2" style="animation-delay: 0.3s">
+							{#each [['Відскануйте чек у Дії', '📱'], ['Кешбек за 5 днів', '⏱️'], ['На будь-яку картку', '💳']] as [text, icon] (text)}
 								<div
-									class="flex flex-1 items-center gap-1.5 rounded-xl border border-green-200 bg-white px-3 py-2.5"
+									class="flex flex-1 min-w-[130px] items-center gap-1.5 rounded-xl border border-green-200 bg-white px-3 py-2.5"
 								>
 									<span class="text-sm">{icon}</span>
 									<span class="text-[11px] font-semibold text-[#065f46]">{text}</span>
@@ -175,10 +195,10 @@
 				<div
 					class="overflow-hidden rounded-[20px] border-2 border-red-400 bg-gradient-to-br from-red-50 to-rose-50"
 				>
-					<div class="p-[26px_28px]">
+					<div class="p-4 sm:p-[26px_28px]">
 						<div class="flex items-center gap-4">
 							<div
-								class="grid h-14 w-14 animate-scale-in place-items-center rounded-2xl bg-[#f8717112]"
+								class="grid h-12 w-12 shrink-0 animate-scale-in place-items-center rounded-2xl bg-[#f8717112] sm:h-14 sm:w-14"
 							>
 								<svg
 									width="28"
@@ -193,9 +213,9 @@
 									<line x1="17" y1="7" x2="7" y2="17" />
 								</svg>
 							</div>
-							<div class="animate-slide-r" style="animation-delay: 0.1s">
+							<div class="min-w-0 animate-slide-r" style="animation-delay: 0.1s">
 								<div class="mb-1 text-[19px] font-black text-[#991b1b]">Не знайдено</div>
-								<div class="text-[13px] text-[#991b1baa]">
+								<div class="break-words text-[13px] text-[#991b1baa]">
 									«{search}» не є учасником програми кешбеку
 								</div>
 							</div>

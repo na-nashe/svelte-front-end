@@ -8,6 +8,7 @@ export interface CashbackProduct {
 	cl: string;
 	v: boolean;
 	pop: boolean;
+	aiFound?: boolean;
 }
 
 export const CB_CATS = [
