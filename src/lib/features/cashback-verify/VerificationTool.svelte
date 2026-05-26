@@ -28,9 +28,8 @@
 			// Fallback to local search
 			const lq = q.toLowerCase();
 			checked =
-				CB.find(
-					(p) => p.name.toLowerCase().includes(lq) || p.brand.toLowerCase().includes(lq)
-				) ?? null;
+				CB.find((p) => p.name.toLowerCase().includes(lq) || p.brand.toLowerCase().includes(lq)) ??
+				null;
 		} finally {
 			loading = false;
 		}
@@ -145,7 +144,7 @@
 								</svg>
 							</div>
 							<div class="flex-1 animate-slide-r" style="animation-delay: 0.15s">
-								<div class="mb-1.5 flex items-center gap-2 flex-wrap">
+								<div class="mb-1.5 flex flex-wrap items-center gap-2">
 									<span class="text-[19px] font-black text-[#065f46]">Кешбек діє!</span>
 									<span
 										class="rounded-full bg-emerald-600 px-3.5 py-1 font-[JetBrains_Mono] text-[13px] font-bold text-white shadow-[0_2px_8px_#05966930]"
@@ -153,7 +152,9 @@
 										-{checked.pct}%
 									</span>
 									{#if checked.aiFound}
-										<span class="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-[JetBrains_Mono] text-[10px] font-bold text-indigo-600">
+										<span
+											class="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-[JetBrains_Mono] text-[10px] font-bold text-indigo-600"
+										>
 											🤖 AI пошук
 										</span>
 									{/if}
@@ -178,10 +179,10 @@
 						</div>
 
 						<!-- Tips -->
-						<div class="mt-[18px] flex flex-wrap animate-up gap-2" style="animation-delay: 0.3s">
+						<div class="mt-[18px] flex animate-up flex-wrap gap-2" style="animation-delay: 0.3s">
 							{#each [['Відскануйте чек у Дії', '📱'], ['Кешбек за 5 днів', '⏱️'], ['На будь-яку картку', '💳']] as [text, icon] (text)}
 								<div
-									class="flex flex-1 min-w-[130px] items-center gap-1.5 rounded-xl border border-green-200 bg-white px-3 py-2.5"
+									class="flex min-w-[130px] flex-1 items-center gap-1.5 rounded-xl border border-green-200 bg-white px-3 py-2.5"
 								>
 									<span class="text-sm">{icon}</span>
 									<span class="text-[11px] font-semibold text-[#065f46]">{text}</span>
@@ -215,7 +216,7 @@
 							</div>
 							<div class="min-w-0 animate-slide-r" style="animation-delay: 0.1s">
 								<div class="mb-1 text-[19px] font-black text-[#991b1b]">Не знайдено</div>
-								<div class="break-words text-[13px] text-[#991b1baa]">
+								<div class="text-[13px] break-words text-[#991b1baa]">
 									«{search}» не є учасником програми кешбеку
 								</div>
 							</div>

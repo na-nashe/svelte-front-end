@@ -1,4 +1,5 @@
 import { getApiBaseURL } from '$lib/getApiBaseURL';
+import { accessTokenCookie } from '$lib/authCookies';
 import { redirect, type Handle, type HandleFetch } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
@@ -31,13 +32,7 @@ const authHandle: Handle = async ({ event, resolve }) => {
 						.get('Authorization')
 						?.replace('Bearer ', '');
 					if (newAccessToken) {
-						event.cookies.set('access_token', newAccessToken, {
-							httpOnly: true,
-							secure: true,
-							sameSite: 'strict',
-							path: '/',
-							maxAge: 60 * 15
-						});
+						event.cookies.set('access_token', newAccessToken, accessTokenCookie);
 						token = newAccessToken;
 					}
 				} else {

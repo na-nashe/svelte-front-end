@@ -20,7 +20,7 @@
 	const hasAlternatives = !!alternativesTotal;
 </script>
 
-<section class="relative bg-[#fafaf9] px-4 pt-24 pb-16 sm:pt-32 sm:pb-5">
+<section class="relative bg-[#fafaf9] px-4 pt-16 pb-10 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-5">
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
@@ -91,7 +91,7 @@
 			</span>
 			на
 			<span
-				class="bg-clip-text text-7xl text-transparent"
+				class="bg-clip-text text-5xl sm:text-7xl text-transparent"
 				style="background-image: linear-gradient(90deg, #0057B7, #2f7df0, #d9a400, #c98a00, #d9a400, #2f7df0, #0057B7); background-size: 300% auto; animation: grad 35s ease infinite"
 			>
 				наше

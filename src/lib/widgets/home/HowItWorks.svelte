@@ -65,7 +65,7 @@
 	<div class="sticky top-0 flex h-screen items-center pb-16">
 		<div class="mx-auto w-full max-w-5xl">
 			<!-- Header -->
-			<div class="mb-12 text-center">
+			<div class="mb-6 text-center sm:mb-12">
 				<span
 					class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase"
 				>
@@ -76,7 +76,7 @@
 				</h2>
 			</div>
 
-			<div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+			<div class="grid gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
 				<!-- Left: Step nav -->
 				<div class="flex flex-col gap-3">
 					{#each steps as step, i (step.n)}
@@ -133,7 +133,7 @@
 						<div
 							in:fly={{ y: 24, duration: 400, delay: 80 }}
 							out:fly={{ y: -24, duration: 280 }}
-							class="absolute w-full max-w-sm rounded-3xl border-2 bg-white p-8 shadow-lg"
+							class="absolute w-full max-w-sm rounded-3xl border-2 bg-white p-5 shadow-lg sm:p-8"
 							style="border-color: {active.color}20"
 						>
 							<div
