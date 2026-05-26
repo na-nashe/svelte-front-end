@@ -1,7 +1,5 @@
 import { env } from '$env/dynamic/private';
 
-// `Secure` cookies are only stored by browsers over HTTPS (localhost excepted).
-// Defaults to true; set COOKIE_SECURE=false to allow auth over plain HTTP.
 const secure = env.COOKIE_SECURE !== 'false';
 
 const base = {
