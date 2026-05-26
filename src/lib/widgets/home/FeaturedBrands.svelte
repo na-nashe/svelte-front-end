@@ -7,7 +7,7 @@
 <section class="bg-[#fafaf9] px-4 py-16 sm:py-24">
 	<div class="mx-auto max-w-5xl">
 		<!-- Header -->
-		<div class="mb-12 text-center">
+		<div class="mb-8 text-center sm:mb-12">
 			<span
 				class="mb-3 inline-block font-[JetBrains_Mono] text-[11px] font-bold tracking-widest text-stone-400 uppercase"
 			>
@@ -64,7 +64,7 @@
 		<!-- CTA -->
 		<div class="text-center">
 			<a
-				href="/nashe"
+				href="/ukrainian-brands"
 				class="inline-flex items-center gap-2 rounded-full border-2 border-stone-200 bg-white px-6 py-3 font-[Outfit] text-sm font-bold text-stone-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-lg"
 			>
 				Усі українські продукти →

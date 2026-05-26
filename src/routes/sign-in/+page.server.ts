@@ -3,6 +3,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 import { signInSchema } from '$lib/schemas/auth';
 import { getApiBaseURL } from '$lib/getApiBaseURL';
+import { accessTokenCookie, refreshTokenCookie } from '$lib/authCookies';
 import type { RequestEvent } from '@sveltejs/kit';
 
 export const load = async () => {
@@ -35,25 +36,13 @@ export const actions = {
 			return message(form, 'Помилка входу. Спробуй ще раз.', { status: 500 });
 		}
 
-		cookies.set('access_token', accessToken, {
-			httpOnly: true,
-			secure: true,
-			sameSite: 'strict',
-			path: '/',
-			maxAge: 60 * 15
-		});
+		cookies.set('access_token', accessToken, accessTokenCookie);
 
 		const setCookieHeader = response.headers.get('set-cookie');
 		const refreshTokenMatch = setCookieHeader?.match(/refresh_token=([^;]+)/);
 		const refreshToken = refreshTokenMatch?.[1];
 		if (refreshToken) {
-			cookies.set('refresh_token', refreshToken, {
-				httpOnly: true,
-				secure: true,
-				sameSite: 'strict',
-				path: '/',
-				maxAge: 60 * 60 * 24 * 30
-			});
+			cookies.set('refresh_token', refreshToken, refreshTokenCookie);
 		}
 
 		redirect(303, '/');

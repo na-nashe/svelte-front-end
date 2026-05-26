@@ -1,5 +1,6 @@
 import { json, type RequestEvent } from '@sveltejs/kit';
 import { getApiBaseURL } from '$lib/getApiBaseURL';
+import { accessTokenCookie } from '$lib/authCookies';
 
 export async function POST({ request, cookies }: RequestEvent) {
 	try {
@@ -22,13 +23,7 @@ export async function POST({ request, cookies }: RequestEvent) {
 			return json({ error: 'Токен не отримано' }, { status: 500 });
 		}
 
-		cookies.set('access_token', accessToken, {
-			httpOnly: true,
-			secure: true,
-			sameSite: 'strict',
-			path: '/',
-			maxAge: 60 * 15
-		});
+		cookies.set('access_token', accessToken, accessTokenCookie);
 
 		return json({ ok: true });
 	} catch {
