@@ -20,7 +20,9 @@
 	const hasAlternatives = !!alternativesTotal;
 </script>
 
-<section class="relative bg-[#fafaf9] px-4 pt-16 pb-10 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-5">
+<section
+	class="relative overflow-hidden bg-[#fafaf9] px-4 pt-16 pb-10 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-5"
+>
 	<!-- Floating gradient orbs -->
 	<div
 		class="pointer-events-none absolute -top-32 -left-32 h-[400px] w-[400px] animate-wave-float rounded-full opacity-20 blur-3xl"
