@@ -17,6 +17,8 @@
 	} = $props();
 
 	let open = $state(openDefault);
+
+	let visibleAlts = $derived(item.alts.filter((alt) => alt.c2 !== 'Росія'));
 </script>
 
 <div
@@ -33,22 +35,12 @@
 			: 'transparent'}"
 	>
 		<div class="flex items-center gap-3.5">
-			<div
-				class="grid h-10 w-10 shrink-0 place-items-center rounded-[11px] border-[1.5px] border-red-200 bg-red-50 transition-transform duration-200"
-				style="transform: {open ? 'rotate(-3deg) scale(1.05)' : 'none'}"
-			>
-				<span class="text-xs font-extrabold text-red-600">✕</span>
-			</div>
 			<div class="text-left">
 				<div class="flex flex-wrap items-center gap-1.5">
 					<span class="text-base font-extrabold tracking-tight">{item.orig}</span>
 					<span class="text-sm">{item.flag}</span>
-					<span
-						class="rounded-full border border-red-200 bg-red-50 px-1.5 py-0.5 text-[8px] font-bold tracking-wide text-red-600 uppercase"
-						>ворожий</span
-					>
 				</div>
-				<span class="text-xs text-stone-400">{item.alts.length} альтернатив</span>
+				<span class="text-xs text-stone-400">{visibleAlts.length} альтернатив</span>
 			</div>
 		</div>
 		<div
@@ -74,7 +66,7 @@
 			: 0}; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)"
 	>
 		<div class="px-2.5 pb-3.5">
-			{#each item.alts as alt, j}
+			{#each visibleAlts as alt, j}
 				<AltRow {alt} index={j} onclick={onAltClick} />
 			{/each}
 			{#if isAuthenticated && item.id}

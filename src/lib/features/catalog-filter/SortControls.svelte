@@ -58,7 +58,7 @@
 		</span>
 	</div>
 
-	<div class="flex items-center gap-1.5">
+	<div class="flex flex-wrap items-center gap-1.5">
 		<!-- Sort buttons -->
 		<div class="flex gap-px rounded-[10px] bg-stone-100 p-0.5">
 			{#each sortOptions as [id, label] (id)}
